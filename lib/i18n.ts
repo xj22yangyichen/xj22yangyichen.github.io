@@ -1,0 +1,110 @@
+import type { SiteLocale } from "@/lib/site-config";
+
+export type LocaleRouteMap = Readonly<Record<string, string>>;
+
+export const messages = {
+  "zh-CN": {
+    nav: {
+      home: "首页",
+      posts: "文章",
+      archives: "归档",
+      books: "图书",
+      links: "友链",
+      about: "关于",
+    },
+    localeLabel: "选择语言",
+    searchLabel: "搜索文章",
+    menuOpen: "打开菜单",
+    menuClose: "关闭菜单",
+    themeLabel: "切换主题",
+  },
+  en: {
+    nav: {
+      home: "Home",
+      posts: "Writing",
+      archives: "Archive",
+      books: "Books",
+      links: "Friends",
+      about: "About",
+    },
+    localeLabel: "Choose language",
+    searchLabel: "Search writing",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
+    themeLabel: "Toggle theme",
+  },
+} as const satisfies Record<SiteLocale, object>;
+
+function withTrailingSlash(pathname: string): string {
+  if (pathname === "/" || /\.[a-z0-9]+$/iu.test(pathname)) {
+    return pathname;
+  }
+
+  return pathname.endsWith("/") ? pathname : `${pathname}/`;
+}
+
+function decodePathname(pathname: string): string {
+  try {
+    return decodeURIComponent(pathname);
+  } catch {
+    return pathname;
+  }
+}
+
+export function getLocaleFromPath(pathname: string): SiteLocale {
+  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "zh-CN";
+}
+
+export function stripLocalePrefix(pathname: string): string {
+  const pathOnly = pathname.split(/[?#]/u, 1)[0] || "/";
+
+  if (pathOnly === "/en" || pathOnly === "/en/") {
+    return "/";
+  }
+
+  if (pathOnly.startsWith("/en/")) {
+    return withTrailingSlash(pathOnly.slice(3) || "/");
+  }
+
+  return withTrailingSlash(
+    pathOnly.startsWith("/") ? pathOnly : `/${pathOnly}`,
+  );
+}
+
+export function getLocalizedPath(pathname: string, locale: SiteLocale): string {
+  const basePath = stripLocalePrefix(pathname);
+
+  if (locale === "zh-CN") {
+    return basePath;
+  }
+
+  return basePath === "/" ? "/en/" : `/en${basePath}`;
+}
+
+export function getLocaleSwitchPath(
+  pathname: string,
+  locale: SiteLocale,
+  contentRoutes: LocaleRouteMap = {},
+): string {
+  const normalizedPath = withTrailingSlash(
+    pathname.split(/[?#]/u, 1)[0] || "/",
+  );
+  const contentRoute =
+    contentRoutes[normalizedPath] ??
+    contentRoutes[withTrailingSlash(decodePathname(normalizedPath))];
+
+  if (contentRoute) {
+    return contentRoute;
+  }
+
+  const basePath = stripLocalePrefix(pathname);
+
+  if (
+    /^\/(?:posts|tags)\/[^/]+\/$/u.test(basePath) ||
+    /^\/books\/[^/]+(?:\/[^/]+)?\/$/u.test(basePath)
+  ) {
+    return getLocalizedPath("/", locale);
+  }
+
+  return getLocalizedPath(basePath, locale);
+}
