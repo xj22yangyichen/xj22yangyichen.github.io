@@ -20,9 +20,14 @@ describe("redirect configuration", () => {
     ]);
   });
 
-  it("starts with no redirects to inherited content", () => {
-    expect(redirectsConfig).toEqual({ paths: [], postSlugs: [] });
-    expect(serializeRedirectFile(redirectsConfig)).not.toContain("/posts/");
+  it("redirects the merged archive pages to the localized article index", () => {
+    expect(redirectsConfig.postSlugs).toEqual([]);
+    expect(serializeRedirectFile(redirectsConfig)).toContain(
+      "/archives/ /posts/ 301",
+    );
+    expect(serializeRedirectFile(redirectsConfig)).toContain(
+      "/en/archives/ /en/posts/ 301",
+    );
   });
 
   it.each([

@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 
-import { ArchivePage } from "@/features/archives/archive-page";
+import { postsContent } from "@/features/posts/posts-content";
+import { RedirectPage } from "@/features/static-page/redirect-page";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { getLocalizedSiteConfig } from "@/lib/site-config";
-
-const identity = getLocalizedSiteConfig("en");
 
 export const metadata: Metadata = buildPageMetadata({
-  description: identity.sectionDescriptions.archives,
+  description: postsContent["en"].description,
   locale: "en",
-  pathname: "/en/archives/",
-  title: "Archive",
+  noIndex: true,
+  pathname: "/en/posts/",
+  title: postsContent["en"].title,
 });
 
 export default function EnglishArchivesPage() {
-  return <ArchivePage locale="en" />;
+  return <RedirectPage href="/en/posts/" locale="en" />;
 }

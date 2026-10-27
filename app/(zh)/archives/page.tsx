@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 
-import { ArchivePage } from "@/features/archives/archive-page";
+import { postsContent } from "@/features/posts/posts-content";
+import { RedirectPage } from "@/features/static-page/redirect-page";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { getLocalizedSiteConfig } from "@/lib/site-config";
-
-const identity = getLocalizedSiteConfig("zh-CN");
 
 export const metadata: Metadata = buildPageMetadata({
-  description: identity.sectionDescriptions.archives,
+  description: postsContent["zh-CN"].description,
   locale: "zh-CN",
-  pathname: "/archives/",
-  title: "文章归档",
+  noIndex: true,
+  pathname: "/posts/",
+  title: postsContent["zh-CN"].title,
 });
 
 export default function ArchivesPage() {
-  return <ArchivePage locale="zh-CN" />;
+  return <RedirectPage href="/posts/" locale="zh-CN" />;
 }

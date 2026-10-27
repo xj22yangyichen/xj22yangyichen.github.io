@@ -7,6 +7,7 @@ import remarkParse from "remark-parse";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
+import { redirectsConfig } from "@/redirects.config";
 import { resolveSiteUrl } from "@/lib/site-config";
 import {
   resolveCloudflareWebAnalyticsConfig,
@@ -173,6 +174,10 @@ async function checkHtmlFile(
   }
 
   const routePath = getRoutePath(relativePath);
+  const redirectTarget = redirectsConfig.paths.find(
+    ({ from }) => from === routePath,
+  )?.to;
+  const canonicalRoute = redirectTarget ?? routePath;
   const htmlSource = await readFile(filePath, "utf8");
   const document = parse(htmlSource);
   const elements = findHtmlElements(document, () => true);
@@ -260,12 +265,34 @@ async function checkHtmlFile(
       const canonicalPath = decodeURIComponent(
         new URL(canonicalValue).pathname,
       );
-      if (canonicalPath !== decodeURIComponent(routePath)) {
+      if (canonicalPath !== decodeURIComponent(canonicalRoute)) {
         errors.push(
-          `${relativePath}: canonical path ${canonicalPath} does not match ${routePath}.`,
+          `${relativePath}: canonical path ${canonicalPath} does not match ${canonicalRoute}.`,
         );
       }
     }
+  }
+
+  if (redirectTarget) {
+    const refresh = elements.find(
+      (element) =>
+        element.tagName === "meta" &&
+        getHtmlAttribute(element, "http-equiv") === "refresh",
+    );
+    const robots = elements.find(
+      (element) =>
+        element.tagName === "meta" &&
+        getHtmlAttribute(element, "name") === "robots",
+    );
+    if (
+      !refresh ||
+      getHtmlAttribute(refresh, "content") !== `0;url=${redirectTarget}`
+    )
+      errors.push(
+        `${relativePath}: missing static redirect to ${redirectTarget}.`,
+      );
+    if (!robots || !getHtmlAttribute(robots, "content")?.includes("noindex"))
+      errors.push(`${relativePath}: redirect must be noindex.`);
   }
 
   const currentAlternate = elements.find(

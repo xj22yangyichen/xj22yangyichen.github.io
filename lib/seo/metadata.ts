@@ -71,29 +71,29 @@ function buildAlternates(
   pathname: string,
   alternatePaths: LocalePathMap,
 ): NonNullable<Metadata["alternates"]> {
-  const languages: Record<string, URL> = {};
+  const languages: Record<string, string> = {};
 
   for (const [language, path] of Object.entries(alternatePaths)) {
     if (path) {
-      languages[language] = getAbsoluteUrl(path);
+      languages[language] = getAbsoluteUrl(path).toString();
     }
   }
 
   const defaultPath = alternatePaths["zh-CN"];
   if (defaultPath) {
-    languages["x-default"] = getAbsoluteUrl(defaultPath);
+    languages["x-default"] = getAbsoluteUrl(defaultPath).toString();
   }
 
   const rssPath = getLocalizedPath("/rss.xml", locale);
 
   return {
-    canonical: getAbsoluteUrl(pathname),
+    canonical: getAbsoluteUrl(pathname).toString(),
     languages,
     types: {
       "application/rss+xml": [
         {
           title: localeMetadata[locale].rssTitle,
-          url: getAbsoluteUrl(rssPath),
+          url: getAbsoluteUrl(rssPath).toString(),
         },
       ],
     },

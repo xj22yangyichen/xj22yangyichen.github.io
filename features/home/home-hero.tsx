@@ -1,6 +1,5 @@
 import { Card } from "@heroui/react/card";
 import {
-  ArrowRight,
   ArrowUpRight,
   ChartNoAxesCombined,
   GitFork,
@@ -48,13 +47,6 @@ export function HomeHero({ locale, tags }: HomeHeroProps) {
           <SiteLink className="primary-link" href={postsHref}>
             {content.readArticles}
             <ArrowUpRight aria-hidden="true" />
-          </SiteLink>
-          <SiteLink
-            className="text-link"
-            href={getLocalizedPath("/archives/", locale)}
-          >
-            {content.browseArchives}
-            <ArrowRight aria-hidden="true" />
           </SiteLink>
         </div>
       </div>

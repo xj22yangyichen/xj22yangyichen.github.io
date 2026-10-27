@@ -42,7 +42,6 @@ test("empty sections and bilingual pages load", async ({ page }) => {
   for (const route of [
     "/posts/",
     "/links/",
-    "/archives/",
     "/en/",
     "/en/about/",
     "/en/posts/",
@@ -55,6 +54,40 @@ test("empty sections and bilingual pages load", async ({ page }) => {
       page.locator('a[href*="chaosyn"], a[href*="example-user"]'),
     ).toHaveCount(0);
   }
+});
+
+test("merged article index preserves its heading and archive layout", async ({
+  page,
+}) => {
+  for (const [path, title, topics] of [
+    ["/posts/", "所有文章", "全部主题"],
+    ["/en/posts/", "All writing", "All topics"],
+  ]) {
+    await page.goto(path!);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title!);
+    await expect(
+      page.getByRole("heading", { level: 2, name: topics! }),
+    ).toBeVisible();
+    await expect(page.locator(".archive-layout")).toBeVisible();
+    await expect(page.locator('nav a[href$="/archives/"]')).toHaveCount(0);
+  }
+  for (const [source, target] of [
+    ["/archives/", "/posts/"],
+    ["/en/archives/", "/en/posts/"],
+  ]) {
+    await page.goto(source!);
+    await expect(page).toHaveURL(new URL(target!, page.url()).href);
+  }
+  await page.goto("/posts/");
+  await page.screenshot({
+    path: "test-results/posts-desktop.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({
+    path: "test-results/posts-mobile.png",
+    fullPage: true,
+  });
 });
 
 test("empty search, mobile navigation and language switch work", async ({

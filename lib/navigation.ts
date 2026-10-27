@@ -4,7 +4,6 @@ import type { SiteLocale } from "@/lib/site-config";
 const routeDefinitions = [
   { key: "home", path: "/" },
   { key: "posts", path: "/posts/" },
-  { key: "archives", path: "/archives/" },
   { key: "links", path: "/links/" },
   { key: "about", path: "/about/" },
 ] as const;
