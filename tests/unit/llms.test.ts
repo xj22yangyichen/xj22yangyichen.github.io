@@ -75,10 +75,10 @@ describe("llms.txt output", () => {
     expect(output).toMatch(/^# Yichen Yang 的博客\n\n>/u);
     expect(output).toContain("## Chinese articles");
     expect(output).toContain("## English articles");
-    expect(output).toContain("## Books and guides");
+    expect(output).not.toContain("## Books and guides");
     expect(output).toContain("/posts/pinned-zh/");
     expect(output).toContain("/en/posts/english-article/");
-    expect(output).toContain("/books/example-book/");
+    expect(output).not.toContain("/books/");
     expect(output).not.toContain("hidden-draft");
     expect(output).not.toContain("hidden-book");
   });

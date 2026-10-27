@@ -27,7 +27,7 @@ describe("SEO output", () => {
       buildSitemap({ articles: [], books: [] }).some((e) =>
         e.url.endsWith("/en/books/"),
       ),
-    ).toBe(true);
+    ).toBe(false);
   });
   it("builds safe article metadata and structured data", () => {
     const sample = article();

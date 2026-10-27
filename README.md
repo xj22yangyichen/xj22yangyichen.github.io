@@ -47,7 +47,7 @@ GitHub：[xj22yangyichen](https://github.com/xj22yangyichen)
 
 文件名使用小写字母、数字或汉字，用连字符分词。draft: true 的文章不会发布。中英文内容使用相同的 translationKey 可关联翻译。添加或修改内容后，提交并推送即可更新网站。
 
-站点姓名、头像、简介和社交链接在 site.config.ts 中配置。友链在 data/friends.json 中维护。图书内容目录为 content/books/zh/ 和 content/books/en/，目前均为空。
+站点姓名、头像、简介和社交链接在 site.config.ts 中配置。友链在 data/friends.json 中维护。图书栏目已暂时移除，不出现在导航、页面或站点索引中。
 
 ## 检查
 

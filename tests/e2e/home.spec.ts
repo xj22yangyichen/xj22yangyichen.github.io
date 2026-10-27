@@ -41,13 +41,11 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
 test("empty sections and bilingual pages load", async ({ page }) => {
   for (const route of [
     "/posts/",
-    "/books/",
     "/links/",
     "/archives/",
     "/en/",
     "/en/about/",
     "/en/posts/",
-    "/en/books/",
     "/en/links/",
   ]) {
     const response = await page.goto(route);

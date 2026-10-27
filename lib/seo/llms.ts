@@ -1,6 +1,5 @@
-import { getBookHref } from "@/features/books/book-links";
 import { getPostHref } from "@/features/posts/post-links";
-import { getPublishedArticles, getPublishedBooks } from "@/lib/content/queries";
+import { getPublishedArticles } from "@/lib/content/queries";
 import type { Article, Book } from "@/lib/content/types";
 import { getAbsoluteUrl, getLocaleDescription } from "@/lib/seo/metadata";
 import { siteConfig, type SiteLocale } from "@/lib/site-config";
@@ -54,20 +53,7 @@ function buildArticleResources(
   );
 }
 
-function buildBookResources(
-  books: readonly Book[],
-  locale: SiteLocale,
-): string[] {
-  return getPublishedBooks(books, locale).map((book) =>
-    formatResource(
-      book.title,
-      getBookHref(locale, book.slug),
-      book.description,
-    ),
-  );
-}
-
-export function buildLlmsText({ articles, books }: LlmsTextInput): string {
+export function buildLlmsText({ articles }: LlmsTextInput): string {
   const lines = [
     `# ${escapeMarkdownInline(siteConfig.brand.name["zh-CN"])}`,
     "",
@@ -87,10 +73,6 @@ export function buildLlmsText({ articles, books }: LlmsTextInput): string {
     "English articles",
     buildArticleResources(articles, "en"),
   );
-  appendSection(lines, "Books and guides", [
-    ...buildBookResources(books, "zh-CN"),
-    ...buildBookResources(books, "en"),
-  ]);
   appendSection(lines, "Site indexes", [
     formatResource(
       siteConfig.brand.name["zh-CN"],
@@ -104,12 +86,6 @@ export function buildLlmsText({ articles, books }: LlmsTextInput): string {
     ),
     formatResource("Chinese articles", "/posts/", "All Chinese articles."),
     formatResource("English articles", "/en/posts/", "All English articles."),
-    formatResource("Chinese books", "/books/", "Books and long-form guides."),
-    formatResource(
-      "English books",
-      "/en/books/",
-      "English books and long-form guides.",
-    ),
     formatResource(
       "About Yichen Yang",
       "/about/",
