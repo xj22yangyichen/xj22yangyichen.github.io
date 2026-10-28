@@ -2,6 +2,7 @@
 @import "@fontsource-variable/noto-serif-sc";
 @import "tailwindcss";
 @import "@heroui/styles";
+@import "katex/dist/katex.min.css";
 @import "../features/about/about.css";
 @import "../features/ai-search/ai-search.css";
 @import "../features/archives/archives.css";

@@ -379,7 +379,8 @@
 }
 
 .article-prose h2,
-.article-prose h3 {
+.article-prose h3,
+.article-prose h4 {
   scroll-margin-top: 110px;
   font-family: var(--serif);
   font-weight: 900;
@@ -398,6 +399,11 @@
 .article-prose h3 {
   margin: 38px 0 16px;
   font-size: 22px;
+}
+
+.article-prose h4 {
+  margin: 28px 0 12px;
+  font-size: 19px;
 }
 
 .article-prose p,
@@ -485,6 +491,12 @@
   margin: 42px 0;
   border: 0;
   border-top: 1px solid var(--line);
+}
+
+.article-prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.5em;
 }
 
 .article-prose input[type="checkbox"] {

@@ -6,7 +6,7 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
     "学习、代码与思考",
   );
   await expect(
-    page.getByText("还没有文章，期待在第一篇记录中与你见面。"),
+    page.getByRole("link", { name: "如何 commit", exact: true }),
   ).toBeVisible();
   await expect(
     page.locator('a[href="https://github.com/xj22yangyichen"]').first(),
@@ -38,7 +38,7 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
     page.getByText(/上海交通大学致远学院 ACM 班本科生/),
   ).toBeVisible();
 });
-test("empty sections and bilingual pages load", async ({ page }) => {
+test("sections and bilingual pages load", async ({ page }) => {
   for (const route of [
     "/posts/",
     "/links/",
@@ -96,7 +96,9 @@ test("empty search, mobile navigation and language switch work", async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.getByRole("button", { name: "搜索文章", exact: true }).click();
-  await page.getByPlaceholder("搜索标题、标签和正文").fill("学习");
+  await page
+    .getByPlaceholder("搜索标题、标签和正文")
+    .fill("no-such-post-8675309");
   await expect(
     page.getByText("没有找到相关内容。", { exact: true }),
   ).toBeVisible();

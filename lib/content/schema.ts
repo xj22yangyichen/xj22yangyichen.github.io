@@ -1,9 +1,14 @@
 import { z } from "zod";
 
 import { supportedLocales } from "@/lib/site-config";
+import { parseContentDate } from "@/lib/content/dates";
 
 const localeSchema = z.enum(supportedLocales);
 const dateSchema = z.iso.date();
+const publicationDateSchema = z.union([
+  dateSchema,
+  z.iso.datetime({ offset: true }),
+]);
 const tagsSchema = z
   .array(z.string().trim().min(1))
   .min(1)
@@ -31,8 +36,8 @@ export const articleFrontmatterSchema = z
   .strictObject({
     title: z.string().trim().min(1),
     description: z.string().trim().min(1).max(240),
-    published: dateSchema,
-    updated: dateSchema.optional(),
+    published: publicationDateSchema,
+    updated: publicationDateSchema.optional(),
     locale: localeSchema,
     tags: tagsSchema,
     draft: z.boolean().default(false),
@@ -43,7 +48,10 @@ export const articleFrontmatterSchema = z
     notionPageId: notionPageIdSchema.optional(),
   })
   .superRefine((article, context) => {
-    if (article.updated && article.updated < article.published) {
+    if (
+      article.updated &&
+      parseContentDate(article.updated) < parseContentDate(article.published)
+    ) {
       context.addIssue({
         code: "custom",
         message: "updated cannot be earlier than published",

@@ -5,6 +5,7 @@ import { getPublishedArticles } from "@/lib/content/queries";
 import type { Article } from "@/lib/content/types";
 import { getAbsoluteUrl, getLocaleDescription } from "@/lib/seo/metadata";
 import { siteConfig } from "@/lib/site-config";
+import { parseContentDate } from "@/lib/content/dates";
 import type { SiteLocale } from "@/lib/site-config";
 
 const feedMetadata = {
@@ -54,15 +55,13 @@ export function buildRssFeed(
               "@_isPermaLink": "true",
             },
             link: articleUrl,
-            pubDate: new Date(
-              `${article.published}T00:00:00.000Z`,
-            ).toUTCString(),
+            pubDate: parseContentDate(article.published).toUTCString(),
             title: article.title,
           };
         }),
         language: locale,
-        lastBuildDate: new Date(
-          `${publishedArticles[0]?.published ?? "1970-01-01"}T00:00:00.000Z`,
+        lastBuildDate: parseContentDate(
+          publishedArticles[0]?.published ?? "1970-01-01",
         ).toUTCString(),
         link: getAbsoluteUrl(homePath).toString(),
         title: details.title,

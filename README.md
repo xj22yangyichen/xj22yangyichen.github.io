@@ -4,7 +4,7 @@
 
 GitHub：[xj22yangyichen](https://github.com/xj22yangyichen)
 
-基于 Next.js、HeroUI 和 Tailwind CSS 的中英文静态博客，使用 GitHub Actions 自动部署到 GitHub Pages。文章、图书、友链和阅读记录从空白开始。广告、统计、评论、赞赏和服务器接口默认关闭。
+基于 Next.js、HeroUI 和 Tailwind CSS 的中英文静态博客，使用 GitHub Actions 自动部署到 GitHub Pages，内容以本地 Markdown 管理。广告、统计、评论、赞赏和服务器接口默认关闭。
 
 ## 本地运行
 
@@ -46,6 +46,14 @@ GitHub：[xj22yangyichen](https://github.com/xj22yangyichen)
     正文从这里开始。
 
 文件名使用小写字母、数字或汉字，用连字符分词。draft: true 的文章不会发布。中英文内容使用相同的 translationKey 可关联翻译。添加或修改内容后，提交并推送即可更新网站。
+
+`published` 和 `updated` 也支持带时区的完整时间，例如 `"2023-09-09T10:17:09+08:00"`。文章页显示原时区的时间，RSS 保留同一时刻；原有的纯日期写法继续可用。正文支持 GFM 表格、代码块，以及 `$...$` 和 `$$...$$` 数学公式。
+
+## 博客园迁移
+
+已迁移 [原博客](https://www.cnblogs.com/xj22yangyichen) 的全部 7 篇公开随笔，未迁移其 10 篇“文章”。原分类转为本站标签，发布时间保留到秒及 `+08:00` 时区。文件使用 `cnblogs-原随笔ID.md` 命名，来源地址、原分类、时间和正文校验摘要记录在 `migrations/cnblogs/manifest.json`。
+
+`pnpm exec tsx scripts/import-cnblogs.ts` 可重新读取公开随笔列表，并核对随笔类型、总数、正文文字和全部代码块。默认拒绝覆盖已编辑的内容；仅在确实需要用原站内容覆盖时添加 `--overwrite`。原站部分更新时间精度只有分钟，早于精确发布时间时不写入本站的 `updated`，原值仍保存在迁移清单中。
 
 站点姓名、头像、简介和社交链接在 site.config.ts 中配置。友链在 data/friends.json 中维护。图书栏目已暂时移除，不出现在导航、页面或站点索引中。文章页面采用按年份分组的时间线和主题列表；原归档地址会自动跳转到文章页面。
 

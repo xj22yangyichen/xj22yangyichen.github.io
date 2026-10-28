@@ -10,7 +10,7 @@ import { SponsorshipSection } from "@/features/monetization/sponsorship-section"
 import { ArticleNavigation } from "@/features/posts/article-navigation";
 import { ArticleToc } from "@/features/posts/article-toc";
 import { MarkdownContent } from "@/features/posts/markdown-content";
-import { formatPostDate } from "@/features/posts/post-links";
+import { formatPostDateTime } from "@/features/posts/post-links";
 import { articleContent } from "@/features/posts/posts-content";
 import { getTagHref } from "@/features/tags/tag-links";
 import type {
@@ -45,7 +45,7 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
         </SiteLink>
         <div className="article-header-meta">
           <time dateTime={article.published}>
-            {formatPostDate(article.published, article.locale)}
+            {formatPostDateTime(article.published, article.locale)}
           </time>
           <span>
             {article.wordCount} {content.words}

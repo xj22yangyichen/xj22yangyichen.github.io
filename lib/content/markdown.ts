@@ -2,6 +2,7 @@ import GithubSlugger from "github-slugger";
 import { toString } from "mdast-util-to-string";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
+import remarkMath from "remark-math";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
@@ -13,7 +14,11 @@ export interface MarkdownAnalysis {
 }
 
 export function analyzeMarkdown(markdown: string): MarkdownAnalysis {
-  const tree = unified().use(remarkParse).use(remarkGfm).parse(markdown);
+  const tree = unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkMath)
+    .parse(markdown);
   const slugger = new GithubSlugger();
   const headings: ContentHeading[] = [];
 

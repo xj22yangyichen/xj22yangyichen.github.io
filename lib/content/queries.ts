@@ -8,6 +8,7 @@ import type {
   TagSummary,
 } from "@/lib/content/types";
 import type { SiteLocale } from "@/lib/site-config";
+import { parseContentDate } from "@/lib/content/dates";
 
 function toArticlePreview(article: Article): ArticlePreview {
   return {
@@ -29,7 +30,10 @@ export function sortArticles(articles: readonly Article[]): Article[] {
       return left.pinned ? -1 : 1;
     }
 
-    return right.published.localeCompare(left.published);
+    return (
+      parseContentDate(right.published).getTime() -
+      parseContentDate(left.published).getTime()
+    );
   });
 }
 

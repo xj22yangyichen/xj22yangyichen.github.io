@@ -14,6 +14,7 @@ import {
 } from "@/lib/content/queries";
 import { getAllArticles } from "@/lib/content/repository";
 import type { SiteLocale } from "@/lib/site-config";
+import { contentCalendarDate } from "@/lib/content/dates";
 
 interface PostsPageProps {
   readonly locale: SiteLocale;
@@ -24,7 +25,7 @@ function formatMonthDay(date: string, locale: SiteLocale): string {
     day: "2-digit",
     month: "short",
     timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
+  }).format(contentCalendarDate(date));
 }
 
 export async function PostsPage({ locale }: PostsPageProps) {
