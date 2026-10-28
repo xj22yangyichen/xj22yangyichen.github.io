@@ -42,7 +42,6 @@ export function HomeHero({ locale, tags }: HomeHeroProps) {
     <section aria-labelledby="home-title" className="shell home-hero">
       <div className="hero-copy">
         <h1 id="home-title">{identity.homeTitle}</h1>
-        <p>{identity.description}</p>
         <div className="hero-actions">
           <SiteLink className="primary-link" href={postsHref}>
             {content.readArticles}

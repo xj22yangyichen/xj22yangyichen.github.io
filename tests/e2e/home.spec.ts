@@ -5,8 +5,10 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "学习、代码与思考",
   );
+  await expect(page.locator(".recent-posts")).toHaveCount(0);
+  await expect(page.locator(".hero-copy > p")).toHaveCount(0);
   await expect(
-    page.getByRole("link", { name: "如何 commit", exact: true }),
+    page.getByRole("link", { name: "阅读文章", exact: true }),
   ).toBeVisible();
   await expect(
     page.locator('a[href="https://github.com/xj22yangyichen"]').first(),
