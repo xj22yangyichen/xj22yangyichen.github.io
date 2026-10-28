@@ -5,7 +5,6 @@ const routeDefinitions = [
   { key: "home", path: "/" },
   { key: "posts", path: "/posts/" },
   { key: "links", path: "/links/" },
-  { key: "about", path: "/about/" },
 ] as const;
 
 export interface NavigationItem {

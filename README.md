@@ -57,6 +57,8 @@ GitHub：[xj22yangyichen](https://github.com/xj22yangyichen)
 
 站点姓名、头像、简介和社交链接在 site.config.ts 中配置。友链在 data/friends.json 中维护。图书栏目已暂时移除，不出现在导航、页面或站点索引中。文章页面采用按年份分组的时间线和主题列表；原归档地址会自动跳转到文章页面。
 
+个人介绍显示在首页标题下方，不再单独设置“关于”页面；原 `/about/` 和 `/en/about/` 地址会跳转到对应语言的首页。
+
 ## 检查
 
     pnpm lint

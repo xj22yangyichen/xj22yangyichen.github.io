@@ -16,6 +16,7 @@ describe("SEO output", () => {
   });
   it("keeps translated and empty sitemap routes valid", () => {
     const sitemap = buildSitemap({ articles, books });
+    expect(sitemap.some((entry) => entry.url.endsWith("/about/"))).toBe(false);
     expect(sitemap.some((e) => e.url.includes("draft-post"))).toBe(false);
     expect(
       sitemap.find((e) => e.url.endsWith("/posts/sample-post/"))?.alternates

@@ -79,6 +79,7 @@ describe("llms.txt output", () => {
     expect(output).toContain("/posts/pinned-zh/");
     expect(output).toContain("/en/posts/english-article/");
     expect(output).not.toContain("/books/");
+    expect(output).not.toContain("/about/");
     expect(output).not.toContain("hidden-draft");
     expect(output).not.toContain("hidden-book");
   });

@@ -48,6 +48,11 @@ describe("localized navigation", () => {
 
   it("marks only the matching navigation section active", () => {
     const englishItems = getNavigationItems("en");
+    expect(englishItems.map((item) => item.key)).toEqual([
+      "home",
+      "posts",
+      "links",
+    ]);
     const postsItem = englishItems.find((item) => item.key === "posts");
     const linksItem = englishItems.find((item) => item.key === "links");
     const homeItem = englishItems.find((item) => item.key === "home");

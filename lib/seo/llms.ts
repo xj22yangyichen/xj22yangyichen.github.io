@@ -77,25 +77,15 @@ export function buildLlmsText({ articles }: LlmsTextInput): string {
     formatResource(
       siteConfig.brand.name["zh-CN"],
       "/",
-      "Chinese homepage and recent writing.",
+      "Chinese homepage and author introduction.",
     ),
     formatResource(
       siteConfig.brand.name.en,
       "/en/",
-      "English homepage and recent writing.",
+      "English homepage and author introduction.",
     ),
     formatResource("Chinese articles", "/posts/", "All Chinese articles."),
     formatResource("English articles", "/en/posts/", "All English articles."),
-    formatResource(
-      "About Yichen Yang",
-      "/about/",
-      "Author profile and public work.",
-    ),
-    formatResource(
-      "About Yichen Yang in English",
-      "/en/about/",
-      "English author profile and public work.",
-    ),
     formatResource("Chinese RSS", "/rss.xml", "Chinese article feed."),
     formatResource("English RSS", "/en/rss.xml", "English article feed."),
     formatResource("Sitemap", "/sitemap.xml", "Complete public URL index."),

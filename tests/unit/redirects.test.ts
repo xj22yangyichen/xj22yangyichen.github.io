@@ -20,13 +20,17 @@ describe("redirect configuration", () => {
     ]);
   });
 
-  it("redirects the merged archive pages to the localized article index", () => {
+  it("redirects merged sections to their localized destinations", () => {
     expect(redirectsConfig.postSlugs).toEqual([]);
     expect(serializeRedirectFile(redirectsConfig)).toContain(
       "/archives/ /posts/ 301",
     );
     expect(serializeRedirectFile(redirectsConfig)).toContain(
       "/en/archives/ /en/posts/ 301",
+    );
+    expect(serializeRedirectFile(redirectsConfig)).toContain("/about/ / 301");
+    expect(serializeRedirectFile(redirectsConfig)).toContain(
+      "/en/about/ /en/ 301",
     );
   });
 

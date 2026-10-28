@@ -6,7 +6,10 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
     "学习、代码与思考",
   );
   await expect(page.locator(".recent-posts")).toHaveCount(0);
-  await expect(page.locator(".hero-copy > p")).toHaveCount(0);
+  await expect(page.locator("#home-title + .hero-introduction")).toContainText(
+    "你好，我是 Yichen Yang，上海交通大学致远学院 ACM 班本科生。",
+  );
+  await expect(page.locator('nav a[href$="/about/"]')).toHaveCount(0);
   await expect(
     page.getByRole("link", { name: "阅读文章", exact: true }),
   ).toBeVisible();
@@ -33,8 +36,9 @@ test("personalized home, profile and mobile layout", async ({ page }) => {
     ),
   ).toBe(true);
   await page.goto("/about/");
+  await expect(page).toHaveURL(new URL("/", page.url()).href);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "关于 Yichen Yang",
+    "学习、代码与思考",
   );
   await expect(
     page.getByText(/上海交通大学致远学院 ACM 班本科生/),
@@ -44,10 +48,8 @@ test("sections and bilingual pages load", async ({ page }) => {
   for (const route of [
     "/posts/",
     "/links/",
-    "/about/",
     "/tags/STL/",
     "/en/",
-    "/en/about/",
     "/en/posts/",
     "/en/links/",
   ]) {
@@ -55,13 +57,19 @@ test("sections and bilingual pages load", async ({ page }) => {
     expect(response?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator(".section-index")).toHaveCount(0);
+    await expect(page.locator('nav a[href$="/about/"]')).toHaveCount(0);
+    if (route === "/en/") {
+      await expect(
+        page.locator("#home-title + .hero-introduction"),
+      ).toContainText("Shanghai Jiao Tong University");
+    }
     await expect(
       page.locator('a[href*="chaosyn"], a[href*="example-user"]'),
     ).toHaveCount(0);
   }
 });
 
-test("merged article index preserves its heading and archive layout", async ({
+test("article index preserves its heading, archive layout and legacy redirects", async ({
   page,
 }) => {
   for (const [path, title, topics] of [
@@ -79,6 +87,8 @@ test("merged article index preserves its heading and archive layout", async ({
   for (const [source, target] of [
     ["/archives/", "/posts/"],
     ["/en/archives/", "/en/posts/"],
+    ["/about/", "/"],
+    ["/en/about/", "/en/"],
   ]) {
     await page.goto(source!);
     await expect(page).toHaveURL(new URL(target!, page.url()).href);
@@ -111,13 +121,13 @@ test("empty search, mobile navigation and language switch work", async ({
   await page.getByRole("button", { name: "打开菜单", exact: true }).click();
   await page
     .locator("#mobile-navigation")
-    .getByRole("link", { name: "关于", exact: true })
+    .getByRole("link", { name: "文章", exact: true })
     .click();
-  await expect(page).toHaveURL(/\/about\/$/);
+  await expect(page).toHaveURL(/\/posts\/$/);
   await page.locator(".locale-switcher-trigger").click();
   await page.getByRole("option", { name: "English", exact: true }).click();
-  await expect(page).toHaveURL(/\/en\/about\/$/);
+  await expect(page).toHaveURL(/\/en\/posts\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "About Yichen Yang",
+    "All writing",
   );
 });
