@@ -33,7 +33,6 @@ export async function TagPage({ locale, tag }: TagPageProps) {
     <main className="shell tag-page">
       <PageIntro
         description={content.count(previews.length)}
-        index="02"
         title={`#${tag}`}
       />
       <div className="post-grid tag-post-grid">

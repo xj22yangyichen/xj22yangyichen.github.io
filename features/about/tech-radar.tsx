@@ -53,7 +53,6 @@ export function TechnologyRadar({ locale }: TechnologyRadarProps) {
     >
       <header className="about-section-heading about-section-heading-compact">
         <div>
-          <span className="section-index">03</span>
           <h2 id="technology-radar-title">{content.heading}</h2>
         </div>
         <p>{content.description}</p>

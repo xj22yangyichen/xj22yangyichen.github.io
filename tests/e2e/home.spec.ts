@@ -44,6 +44,8 @@ test("sections and bilingual pages load", async ({ page }) => {
   for (const route of [
     "/posts/",
     "/links/",
+    "/about/",
+    "/tags/STL/",
     "/en/",
     "/en/about/",
     "/en/posts/",
@@ -52,6 +54,7 @@ test("sections and bilingual pages load", async ({ page }) => {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator(".section-index")).toHaveCount(0);
     await expect(
       page.locator('a[href*="chaosyn"], a[href*="example-user"]'),
     ).toHaveCount(0);

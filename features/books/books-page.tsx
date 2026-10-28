@@ -15,11 +15,7 @@ export async function BooksPage({ locale }: BooksPageProps) {
 
   return (
     <main className="shell books-page">
-      <PageIntro
-        description={content.description}
-        index="04"
-        title={content.title}
-      />
+      <PageIntro description={content.description} title={content.title} />
       <div className="book-list">
         {books.length === 0 ? (
           <p>

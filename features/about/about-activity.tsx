@@ -180,7 +180,6 @@ export function AboutActivity({ locale }: AboutActivityProps) {
     >
       <header className="about-section-heading">
         <div>
-          <span className="section-index">01</span>
           <h2 id="about-activity-title">{content.heading}</h2>
         </div>
         <p>{loaded ? content.description : content.loading}</p>
@@ -216,7 +215,8 @@ export function AboutActivity({ locale }: AboutActivityProps) {
               {content.githubTitle}
             </h3>
             <p>
-              @{status?.github?.username ?? "xj22yangyichen"} · {content.githubPeriod}
+              @{status?.github?.username ?? "xj22yangyichen"} ·{" "}
+              {content.githubPeriod}
             </p>
           </div>
           <div aria-label="Contribution level" className="about-heat-legend">

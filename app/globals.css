@@ -591,13 +591,6 @@ html[data-theme="dark"] .theme-icon-sun {
   gap: 16px;
 }
 
-.section-index {
-  color: var(--coral);
-  font-family: Georgia, serif;
-  font-size: 13px;
-  font-weight: 700;
-}
-
 .section-heading h2,
 .page-intro h1 {
   margin: 0;
@@ -765,7 +758,6 @@ html[data-theme="dark"] .theme-icon-sun {
 }
 
 .page-intro h1 {
-  margin-top: 10px;
   font-size: 66px;
   line-height: 1.2;
 }

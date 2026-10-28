@@ -25,11 +25,7 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
 
   return (
     <main className="shell static-page">
-      <PageIntro
-        description={copy.description}
-        index="404"
-        title={copy.title}
-      />
+      <PageIntro description={copy.description} title={copy.title} />
       <SiteLink className="text-link" href={getLocalizedPath("/", locale)}>
         {copy.action}
       </SiteLink>

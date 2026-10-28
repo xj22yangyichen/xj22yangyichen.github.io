@@ -37,11 +37,7 @@ export async function PostsPage({ locale }: PostsPageProps) {
 
   return (
     <main className="shell archive-page">
-      <PageIntro
-        description={heading.description}
-        index="02"
-        title={heading.title}
-      />
+      <PageIntro description={heading.description} title={heading.title} />
 
       <div className="archive-layout">
         <aside className="archive-aside">

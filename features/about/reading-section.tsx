@@ -33,7 +33,6 @@ export function ReadingSection({ locale }: ReadingSectionProps) {
     >
       <header className="about-section-heading about-section-heading-compact">
         <div>
-          <span className="section-index">02</span>
           <h2 id="reading-status-title">{content.heading}</h2>
         </div>
         <p>{content.description}</p>

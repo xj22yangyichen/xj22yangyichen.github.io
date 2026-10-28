@@ -25,7 +25,6 @@ export function RecentPosts({ locale, posts }: RecentPostsProps) {
       <section aria-labelledby="recent-title" className="shell recent-posts">
         <header className="section-heading">
           <div>
-            <span className="section-index">01</span>
             <h2 id="recent-title">{content.recentTitle}</h2>
           </div>
         </header>
@@ -45,7 +44,6 @@ export function RecentPosts({ locale, posts }: RecentPostsProps) {
     <section aria-labelledby="recent-title" className="shell recent-posts">
       <header className="section-heading">
         <div>
-          <span className="section-index">01</span>
           <h2 id="recent-title">{content.recentTitle}</h2>
         </div>
         <SiteLink className="text-link" href={postsHref}>

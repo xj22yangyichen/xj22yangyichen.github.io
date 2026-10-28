@@ -31,7 +31,6 @@ export function AboutPageView({ locale }: AboutPageViewProps) {
       >
         <div className="about-page-intro">
           <div className="about-page-meta">
-            <span className="section-index">05</span>
             <span>{content.heroMeta}</span>
           </div>
           <h1 id="about-page-title">{identity.aboutTitle}</h1>

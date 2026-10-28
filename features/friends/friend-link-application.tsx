@@ -83,7 +83,6 @@ export function FriendLinkApplication({ locale }: FriendLinkApplicationProps) {
   return (
     <div className="friend-link-application">
       <div className="friend-link-application-copy">
-        <span className="section-index">LINK / 01</span>
         <h2>{copy.applyTitle}</h2>
         <p>{copy.applyDescription}</p>
       </div>

@@ -21,7 +21,6 @@ export function FriendsPage({ locale }: FriendsPageProps) {
     <main className="shell friends-page">
       <PageIntro
         description={identity.sectionDescriptions.links}
-        index="06"
         title={content.title}
       />
 
