@@ -1,3 +1,16 @@
 {
-  "friends": []
+  "friends": [
+    {
+      "name": "Mingxuan Zhang",
+      "description": "",
+      "url": "https://wyehnf.github.io/",
+      "avatar": "/images/friends/wyehnf.jpg"
+    },
+    {
+      "name": "Fomak",
+      "description": "",
+      "url": "https://fomak-1012.com/",
+      "avatar": "/images/friends/fomak-1012.jpg"
+    }
+  ]
 }

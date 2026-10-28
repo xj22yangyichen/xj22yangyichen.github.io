@@ -293,8 +293,8 @@ export const siteConfig: PublicSiteConfig = {
       en: "My books and long reads. Nothing published yet.",
     },
     links: {
-      "zh-CN": "我的友链，目前暂无收录。",
-      en: "Friends of this blog. No links added yet.",
+      "zh-CN": "我的朋友与他们的个人网站。",
+      en: "Friends and their personal websites.",
     },
     posts: {
       "zh-CN": "记录学习、编程实践与日常思考。",
