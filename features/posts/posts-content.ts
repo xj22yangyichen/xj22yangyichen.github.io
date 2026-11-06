@@ -27,7 +27,9 @@ export const postsContent = {
 export const articleContent = {
   "zh-CN": {
     back: "返回所有文章",
+    collapseContents: "收起目录",
     contents: "本文目录",
+    expandContents: "展开目录",
     minutes: "分钟阅读",
     navigation: "文章导航",
     next: "下一篇",
@@ -36,7 +38,9 @@ export const articleContent = {
   },
   en: {
     back: "Back to all writing",
+    collapseContents: "Collapse table of contents",
     contents: "On this page",
+    expandContents: "Expand table of contents",
     minutes: "min read",
     navigation: "Article navigation",
     next: "Next post",

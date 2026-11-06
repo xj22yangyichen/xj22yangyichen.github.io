@@ -7,12 +7,14 @@ import { ArticleViewStats } from "@/features/analytics/article-view-stats";
 import { GiscusComments } from "@/features/comments/giscus-comments";
 import { AdPlacement } from "@/features/monetization/ad-placement";
 import { SponsorshipSection } from "@/features/monetization/sponsorship-section";
+import { ArticleLayout } from "@/features/posts/article-layout";
 import { ArticleNavigation } from "@/features/posts/article-navigation";
 import { ArticleToc } from "@/features/posts/article-toc";
 import { MarkdownContent } from "@/features/posts/markdown-content";
 import { formatPostDateTime } from "@/features/posts/post-links";
 import { articleContent } from "@/features/posts/posts-content";
 import { getTagHref } from "@/features/tags/tag-links";
+import { getArticleTocHeadings } from "@/lib/content/toc";
 import type {
   Article,
   ArticleNavigation as ArticleNavigationData,
@@ -77,20 +79,27 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
         </div>
       ) : null}
 
-      <div className="shell article-layout">
-        <article>
-          <MarkdownContent markdown={article.body} />
-          <AdPlacement advertisement={advertisement} locale={article.locale} />
-          <ArticleNavigation
-            ariaLabel={content.navigation}
-            labels={{ next: content.next, previous: content.previous }}
-            navigation={navigation}
-          />
-          <SponsorshipSection sponsorship={sponsorship} />
-          <GiscusComments config={giscusConfig} locale={article.locale} />
-        </article>
-        <ArticleToc headings={article.headings} title={content.contents} />
-      </div>
+      <ArticleLayout
+        hasToc={getArticleTocHeadings(article.headings).length > 0}
+        key={`${article.locale}:${article.slug}`}
+        labels={{
+          collapse: content.collapseContents,
+          expand: content.expandContents,
+        }}
+        toc={
+          <ArticleToc headings={article.headings} title={content.contents} />
+        }
+      >
+        <MarkdownContent markdown={article.body} />
+        <AdPlacement advertisement={advertisement} locale={article.locale} />
+        <ArticleNavigation
+          ariaLabel={content.navigation}
+          labels={{ next: content.next, previous: content.previous }}
+          navigation={navigation}
+        />
+        <SponsorshipSection sponsorship={sponsorship} />
+        <GiscusComments config={giscusConfig} locale={article.locale} />
+      </ArticleLayout>
     </main>
   );
 }
