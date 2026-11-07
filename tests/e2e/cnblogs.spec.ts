@@ -25,6 +25,26 @@ test("all seven essays preserve their titles, tags, timestamps and code", async 
   }
 });
 
+test("C++ code highlighting follows the blog theme", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/posts/cnblogs-17688982/");
+
+  const block = page.locator(".article-prose pre");
+  const code = block.locator("code.hljs.language-cpp");
+  const keyword = code.locator(".hljs-keyword").filter({ hasText: /^while$/u });
+  const string = code.locator(".hljs-string").filter({ hasText: /^"%d%d"$/u });
+
+  await expect(code).toContainText("#include<math.h>");
+  await expect(block).toHaveCSS("background-color", "rgb(245, 245, 245)");
+  await expect(keyword).toHaveCSS("color", "rgb(0, 0, 204)");
+  await expect(string).toHaveCSS("color", "rgb(163, 21, 21)");
+
+  await page.getByRole("button", { name: "切换主题" }).click();
+  await expect(block).toHaveCSS("background-color", "rgb(30, 30, 30)");
+  await expect(keyword).toHaveCSS("color", "rgb(86, 156, 214)");
+  await expect(string).toHaveCSS("color", "rgb(214, 157, 133)");
+});
+
 test("formulas, tables, tag browsing and imported search results work", async ({
   page,
 }) => {
