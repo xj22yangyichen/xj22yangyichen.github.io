@@ -17,11 +17,12 @@ describe("redirect configuration", () => {
     expect(rules).toEqual([
       { from: "/posts/old-slug", status: 301, to: "/posts/new-slug/" },
       { from: "/posts/old-slug/", status: 301, to: "/posts/new-slug/" },
+      { from: "/en/posts/old-slug", status: 301, to: "/en/posts/new-slug/" },
+      { from: "/en/posts/old-slug/", status: 301, to: "/en/posts/new-slug/" },
     ]);
   });
 
   it("redirects merged sections to their localized destinations", () => {
-    expect(redirectsConfig.postSlugs).toEqual([]);
     expect(serializeRedirectFile(redirectsConfig)).toContain(
       "/archives/ /posts/ 301",
     );

@@ -57,9 +57,11 @@ export function createRedirectRules(
   for (const mapping of configuration.paths) addRule(mapping);
   for (const mapping of configuration.postSlugs) {
     validateSlug(mapping);
-    const target = `/posts/${mapping.to}/`;
-    addRule({ from: `/posts/${mapping.from}`, to: target });
-    addRule({ from: `/posts/${mapping.from}/`, to: target });
+    for (const prefix of ["/posts", "/en/posts"]) {
+      const target = `${prefix}/${mapping.to}/`;
+      addRule({ from: `${prefix}/${mapping.from}`, to: target });
+      addRule({ from: `${prefix}/${mapping.from}/`, to: target });
+    }
   }
 
   for (const rule of rules) {

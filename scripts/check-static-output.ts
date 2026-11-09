@@ -8,6 +8,7 @@ import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
 import { redirectsConfig } from "@/redirects.config";
+import { createRedirectRules } from "@/lib/redirects/generator";
 import { resolveSiteUrl } from "@/lib/site-config";
 import {
   resolveCloudflareWebAnalyticsConfig,
@@ -17,6 +18,9 @@ import {
 import { resolveAdSenseClientId } from "@/lib/monetization/config";
 
 const outputDirectory = path.resolve("out");
+const redirectTargets = new Map(
+  createRedirectRules(redirectsConfig).map(({ from, to }) => [from, to]),
+);
 const siteUrl = resolveSiteUrl();
 const analytics = resolveUmamiConfig();
 const cloudflareWebAnalytics = resolveCloudflareWebAnalyticsConfig();
@@ -174,9 +178,7 @@ async function checkHtmlFile(
   }
 
   const routePath = getRoutePath(relativePath);
-  const redirectTarget = redirectsConfig.paths.find(
-    ({ from }) => from === routePath,
-  )?.to;
+  const redirectTarget = redirectTargets.get(routePath);
   const canonicalRoute = redirectTarget ?? routePath;
   const htmlSource = await readFile(filePath, "utf8");
   const document = parse(htmlSource);
@@ -324,7 +326,7 @@ async function checkHtmlFile(
     errors.push(`${relativePath}: missing Twitter card.`);
   }
 
-  if (/^\/(?:en\/)?posts\/[^/]+\/$/u.test(routePath)) {
+  if (!redirectTarget && /^\/(?:en\/)?posts\/[^/]+\/$/u.test(routePath)) {
     const jsonLd = elements.find(
       (element) =>
         element.tagName === "script" &&

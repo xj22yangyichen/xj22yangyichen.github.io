@@ -30,7 +30,7 @@ test("published articles display their titles, tags, timestamps and code", async
 
 test("C++ code highlighting follows the blog theme", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
-  await page.goto("/posts/cnblogs-17688982/");
+  await page.goto("/posts/poj2411-mondriaans-dream-duo-mi-nuo-mi-pu-wen-ti/");
 
   const block = page.locator(".article-prose pre");
   const code = block.locator("code.hljs.language-cpp");
@@ -51,7 +51,7 @@ test("C++ code highlighting follows the blog theme", async ({ page }) => {
 test("formulas, tables, tag browsing and search results work", async ({
   page,
 }) => {
-  await page.goto("/posts/cnblogs-17688982/");
+  await page.goto("/posts/poj2411-mondriaans-dream-duo-mi-nuo-mi-pu-wen-ti/");
   await expect(page.locator(".katex")).toHaveCount(9);
   await expect(page.locator(".katex-error")).toHaveCount(0);
   await page.screenshot({
@@ -68,7 +68,7 @@ test("formulas, tables, tag browsing and search results work", async ({
     path: "test-results/article-math-mobile.png",
     fullPage: true,
   });
-  await page.goto("/posts/cnblogs-19638493/");
+  await page.goto("/posts/ru-he-commit/");
   await expect(page.locator(".article-prose table tbody tr")).toHaveCount(11);
   await page
     .locator(".article-header-tags")

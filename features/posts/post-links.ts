@@ -1,6 +1,7 @@
 import { getLocalizedPath } from "@/lib/i18n";
 import type { SiteLocale } from "@/lib/site-config";
 import { contentCalendarDate } from "@/lib/content/dates";
+import { redirectsConfig } from "@/redirects.config";
 
 export function formatPostDate(date: string, locale: SiteLocale): string {
   return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "zh-CN", {
@@ -21,6 +22,11 @@ export function formatPostDateTime(date: string, locale: SiteLocale): string {
 
 export function getPostHref(locale: SiteLocale, slug: string): string {
   return getLocalizedPath(`/posts/${slug}/`, locale);
+}
+
+export function getPostRedirectHref(locale: SiteLocale, slug: string) {
+  const mapping = redirectsConfig.postSlugs.find(({ from }) => from === slug);
+  return mapping ? getPostHref(locale, mapping.to) : undefined;
 }
 
 export function decodePostSlug(segment: string): string {

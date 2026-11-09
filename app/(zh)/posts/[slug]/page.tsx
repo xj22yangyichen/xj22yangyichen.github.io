@@ -7,7 +7,11 @@ import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import { ArticlePage } from "@/features/posts/article-page";
-import { decodePostSlug } from "@/features/posts/post-links";
+import {
+  decodePostSlug,
+  getPostRedirectHref,
+} from "@/features/posts/post-links";
+import { RedirectPage } from "@/features/static-page/redirect-page";
 import {
   findPublishedArticle,
   findArticleTranslation,
@@ -20,6 +24,7 @@ import {
   buildArticleStructuredData,
 } from "@/lib/seo/content-metadata";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { redirectsConfig } from "@/redirects.config";
 
 export const dynamicParams = false;
 
@@ -31,9 +36,10 @@ export async function generateStaticParams() {
   const articles = await getAllArticles();
 
   return ensureStaticParams(
-    getPublishedArticles(articles, "zh-CN").map((article) => ({
-      slug: article.slug,
-    })),
+    [
+      ...getPublishedArticles(articles, "zh-CN").map(({ slug }) => ({ slug })),
+      ...redirectsConfig.postSlugs.map(({ from }) => ({ slug: from })),
+    ],
     { slug: emptyContentSegment },
   );
 }
@@ -43,6 +49,16 @@ export async function generateMetadata({
 }: ArticleRouteProps): Promise<Metadata> {
   const [{ slug }, articles] = await Promise.all([params, getAllArticles()]);
   const decodedSlug = decodePostSlug(slug);
+  const redirectHref = getPostRedirectHref("zh-CN", decodedSlug);
+  if (redirectHref) {
+    return buildPageMetadata({
+      description: "这篇文章已移动到新地址。",
+      locale: "zh-CN",
+      noIndex: true,
+      pathname: redirectHref,
+      title: "文章已移动",
+    });
+  }
   const article = findPublishedArticle(articles, "zh-CN", decodedSlug);
 
   return article
@@ -64,7 +80,12 @@ export default async function ChineseArticlePage({
   params,
 }: ArticleRouteProps) {
   const [{ slug }, articles] = await Promise.all([params, getAllArticles()]);
-  const article = findPublishedArticle(articles, "zh-CN", decodePostSlug(slug));
+  const decodedSlug = decodePostSlug(slug);
+  const redirectHref = getPostRedirectHref("zh-CN", decodedSlug);
+  if (redirectHref) {
+    return <RedirectPage href={redirectHref} label="前往文章" locale="zh-CN" />;
+  }
+  const article = findPublishedArticle(articles, "zh-CN", decodedSlug);
 
   if (!article) {
     notFound();
