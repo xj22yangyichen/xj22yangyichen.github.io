@@ -1,13 +1,16 @@
 import { test, expect } from "@playwright/test";
-import manifest from "../../migrations/cnblogs/manifest.json";
+import { loadArticles } from "../../lib/content/reader";
 
-test("all seven essays preserve their titles, tags, timestamps and code", async ({
+test("published articles display their titles, tags, timestamps and code", async ({
   page,
 }) => {
   await page.goto("/posts/");
-  await expect(page.locator(".archive-row")).toHaveCount(7);
-  for (const record of manifest.records) {
-    await page.goto(`/posts/cnblogs-${record.id}/`);
+  const articles = (await loadArticles()).filter(
+    (article) => !article.draft && article.locale === "zh-CN",
+  );
+  await expect(page.locator(".archive-row")).toHaveCount(articles.length);
+  for (const record of articles) {
+    await page.goto(`/posts/${record.slug}/`);
     await expect(page.locator("h1")).toHaveText(record.title);
     await expect(page.locator(".article-header time")).toHaveAttribute(
       "datetime",
@@ -20,7 +23,7 @@ test("all seven essays preserve their titles, tags, timestamps and code", async 
       record.tags,
     );
     await expect(page.locator(".article-prose pre")).toHaveCount(
-      record.codeBlocks,
+      (record.body.match(/^```/gm)?.length ?? 0) / 2,
     );
   }
 });
@@ -45,14 +48,14 @@ test("C++ code highlighting follows the blog theme", async ({ page }) => {
   await expect(string).toHaveCSS("color", "rgb(214, 157, 133)");
 });
 
-test("formulas, tables, tag browsing and imported search results work", async ({
+test("formulas, tables, tag browsing and search results work", async ({
   page,
 }) => {
   await page.goto("/posts/cnblogs-17688982/");
   await expect(page.locator(".katex")).toHaveCount(9);
   await expect(page.locator(".katex-error")).toHaveCount(0);
   await page.screenshot({
-    path: "test-results/cnblogs-math-desktop.png",
+    path: "test-results/article-math-desktop.png",
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
@@ -62,7 +65,7 @@ test("formulas, tables, tag browsing and imported search results work", async ({
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "test-results/cnblogs-math-mobile.png",
+    path: "test-results/article-math-mobile.png",
     fullPage: true,
   });
   await page.goto("/posts/cnblogs-19638493/");
