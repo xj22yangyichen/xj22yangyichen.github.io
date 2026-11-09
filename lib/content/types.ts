@@ -20,6 +20,7 @@ interface ContentFile {
 }
 
 export interface Article extends ArticleFrontmatter, ContentFile {
+  readonly contentLocale?: SiteLocale;
   readonly readTime: number;
   readonly wordCount: number;
 }

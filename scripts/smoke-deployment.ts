@@ -3,7 +3,7 @@ import { parse, type DefaultTreeAdapterMap } from "parse5";
 
 import { getPostHref } from "@/features/posts/post-links";
 import { getPublishedArticles } from "@/lib/content/queries";
-import { loadArticles } from "@/lib/content/reader";
+import { loadSiteArticles } from "@/lib/content/reader";
 import { resolveProductionSiteUrl } from "@/lib/deployment/config";
 import { redirectsConfig } from "@/redirects.config";
 
@@ -227,7 +227,7 @@ async function main() {
   const baseUrl = resolveProductionSiteUrl(
     process.argv[2] ?? process.env.NEXT_PUBLIC_SITE_URL,
   );
-  const allArticles = await loadArticles();
+  const allArticles = await loadSiteArticles();
   const article = getPublishedArticles(allArticles, "zh-CN")[0];
   const englishArticle = getPublishedArticles(allArticles, "en")[0];
   if (!article) {

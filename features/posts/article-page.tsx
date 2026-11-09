@@ -45,6 +45,12 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
           <ArrowLeft aria-hidden="true" />
           {content.back}
         </SiteLink>
+        {article.locale === "en" && article.contentLocale === "zh-CN" ? (
+          <p className="article-language-notice" role="note">
+            This article is not available in English. The original Chinese text
+            is shown below.
+          </p>
+        ) : null}
         <div className="article-header-meta">
           <time dateTime={article.published}>
             {formatPostDateTime(article.published, article.locale)}
@@ -90,7 +96,9 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
           <ArticleToc headings={article.headings} title={content.contents} />
         }
       >
-        <MarkdownContent markdown={article.body} />
+        <div lang={article.contentLocale ?? article.locale}>
+          <MarkdownContent markdown={article.body} />
+        </div>
         <AdPlacement advertisement={advertisement} locale={article.locale} />
         <ArticleNavigation
           ariaLabel={content.navigation}

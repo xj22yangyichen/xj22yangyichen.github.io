@@ -986,3 +986,13 @@ html[data-theme="dark"] .article-prose pre {
     flex-direction: column;
   }
 }
+
+.article-language-notice {
+  margin-block: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--foreground);
+  line-height: 1.6;
+}

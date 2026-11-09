@@ -190,7 +190,16 @@ export function findArticleTranslation(
   targetLocale: SiteLocale,
 ): Article | null {
   if (!article.translationKey) {
-    return null;
+    return (
+      articles.find(
+        (candidate) =>
+          !candidate.draft &&
+          candidate.locale === targetLocale &&
+          candidate.sourcePath === article.sourcePath &&
+          (candidate.contentLocale !== undefined ||
+            article.contentLocale !== undefined),
+      ) ?? null
+    );
   }
 
   return (

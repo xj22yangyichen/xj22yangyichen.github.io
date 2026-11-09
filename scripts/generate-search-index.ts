@@ -1,12 +1,12 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { loadArticles } from "@/lib/content/reader";
+import { loadSiteArticles } from "@/lib/content/reader";
 import { buildSerializedSearchAsset } from "@/lib/search/index";
 import { supportedLocales } from "@/lib/site-config";
 
 async function generateSearchIndexes() {
-  const articles = await loadArticles();
+  const articles = await loadSiteArticles();
   const outputDirectory = path.join(process.cwd(), "public", "search-index");
   await mkdir(outputDirectory, { recursive: true });
 

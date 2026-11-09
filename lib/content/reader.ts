@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import type { z } from "zod";
 
 import { ContentValidationError } from "@/lib/content/errors";
+import { includeEnglishArticles } from "@/lib/content/article-localization";
 import { analyzeMarkdown } from "@/lib/content/markdown";
 import { calculateReadingMetrics } from "@/lib/content/metrics";
 import {
@@ -25,6 +26,12 @@ const localeDirectories = {
 interface LoadContentOptions {
   readonly publicRoot?: string;
   readonly root?: string;
+}
+
+export async function loadSiteArticles(
+  options: LoadContentOptions = {},
+): Promise<Article[]> {
+  return includeEnglishArticles(await loadArticles(options));
 }
 
 async function listContentFiles(root: string): Promise<string[]> {

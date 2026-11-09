@@ -152,7 +152,7 @@ export function buildArticleStructuredData(article: Article) {
     description: article.description,
     headline: article.title,
     image: imageUrl,
-    inLanguage: article.locale,
+    inLanguage: article.contentLocale ?? article.locale,
     mainEntityOfPage: {
       "@id": articleUrl,
       "@type": "WebPage",
