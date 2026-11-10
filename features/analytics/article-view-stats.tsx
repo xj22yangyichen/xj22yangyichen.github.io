@@ -4,6 +4,8 @@ import { Eye } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { loadArticleStats } from "@/features/analytics/umami-client";
+import { ArticleReadCount } from "@/features/analytics/article-read-count";
+import { siteConfig } from "@/site.config";
 import { resolveUmamiConfig } from "@/lib/analytics/config";
 import {
   getArticleAnalyticsPaths,
@@ -27,7 +29,7 @@ const labels = {
   "zh-CN": {
     loading: "访问统计加载中",
     unavailable: "统计暂不可用",
-    views: "浏览",
+    views: "阅读量",
     visitors: "访客",
   },
   en: {
@@ -84,7 +86,11 @@ export function ArticleViewStats({
     };
   }, [paths, pathsKey]);
 
-  if (!analytics?.pageViewsEnabled) return null;
+  if (!analytics?.pageViewsEnabled) {
+    return !compact && siteConfig.integrations.articleReadCount.enabled ? (
+      <ArticleReadCount key={pathsKey} locale={locale} />
+    ) : null;
+  }
 
   let text: string = copy.loading;
   if (state.status === "unavailable") {

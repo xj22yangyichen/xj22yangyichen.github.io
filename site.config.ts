@@ -128,6 +128,7 @@ interface PublicSiteConfig {
   readonly copyrightYear: number;
   readonly defaultLocale: SiteLocale;
   readonly integrations: {
+    readonly articleReadCount: { readonly enabled: boolean };
     readonly advertising: AdvertisingConfig;
     readonly aiSearch: AiSearchConfig;
     readonly analytics: UmamiAnalyticsConfig;
@@ -246,6 +247,7 @@ export const siteConfig: PublicSiteConfig = {
       timezone: "Asia/Shanghai",
       websiteId: "",
     },
+    articleReadCount: { enabled: true },
     cloudflareWebAnalytics: { enabled: false, token: "" },
     comments: {
       category: "",
