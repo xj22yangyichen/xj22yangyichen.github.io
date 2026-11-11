@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import type { z } from "zod";
 
 import { ContentValidationError } from "@/lib/content/errors";
+import { validateCommentIdentities } from "@/lib/content/comment-identity";
 import { includeEnglishArticles } from "@/lib/content/article-localization";
 import { analyzeMarkdown } from "@/lib/content/markdown";
 import { calculateReadingMetrics } from "@/lib/content/metrics";
@@ -393,6 +394,7 @@ export async function loadArticles(
   );
 
   validateUniqueContent(articles, "article");
+  validateCommentIdentities(articles);
   return articles;
 }
 

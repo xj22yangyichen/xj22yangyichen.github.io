@@ -58,6 +58,7 @@ published: "2026-10-27"
 locale: zh-CN
 tags: [随笔]
 draft: false
+commentId: wo-de-di-yi-pian-wen-zhang
 ---
 
 正文从这里开始。
@@ -90,7 +91,40 @@ $env:NEXT_PUBLIC_SITE_URL = "https://xj22yangyichen.github.io"
 pnpm build
 ```
 
-当前部署为静态托管。文章阅读量默认开启；广告、其他统计、评论和赞赏默认关闭；AI 搜索、在线友链申请和实时活动接口是需要服务器及相应配置的可选功能。
+当前部署为静态托管。文章阅读量和 GitHub 评论已开启；广告、其他统计和赞赏默认关闭；AI 搜索、在线友链申请和实时活动接口是需要服务器及相应配置的可选功能。
+
+### GitHub 评论（Giscus）
+
+文章底部已接入并启用 Giscus，读者通过 GitHub 登录授权后发表评论，评论公开保存在 `xj22yangyichen/Blog-Comments` 仓库的 `Comments` 分类中。可通过 `integrations.comments.enabled` 关闭。
+
+首次启用：
+
+1. 在 GitHub 创建独立的公开仓库，例如 `xj22yangyichen/blog-comments`，在 Settings → General → Features 中启用 Discussions。
+2. 安装 [Giscus GitHub App](https://github.com/apps/giscus)，只授权评论仓库。
+3. 在 Discussions 中创建 `Comments` 分类，类型选 Announcements。
+4. 打开 [Giscus 配置页](https://giscus.app/zh-CN)，填写仓库并选择分类。从生成的脚本中复制 `data-repo`、`data-repo-id`、`data-category` 和 `data-category-id`。
+5. 将四项分别填入 `site.config.ts` 的 `integrations.comments.repo`、`repoId`、`category`、`categoryId`，并将 `enabled` 改为 `true`。这些都是公开标识，无需配置私人令牌。
+6. 检查并重新构建部署。配置在构建时读取，仅修改 GitHub 设置不会更新已发布网页。
+
+页面映射由组件统一设为 `specific`，匹配字符串为 `post:<commentId>`，启用严格匹配。无需把配置页生成的脚本手动插入页面，也不要改成 pathname 映射。首条评论或回应会自动创建讨论。
+
+每篇文章在 frontmatter 中保存 `commentId`，使用小写英文字母、数字和连字符。首次可使用文章短名，之后即使改标题或文件名也不要改变这个值。中英文译文使用同一个 `commentId`；自动生成的英文界面会继承中文原文的值。启用评论后，缺少标识的已发布文章会使构建报错；内容校验会阻止无关文章共用标识或译文使用不同标识。
+
+Notion 首次同步可从可选的 `Comment ID` 文本字段读取标识，未填写时采用原有短名或新文章短名（旧短名含中文时改用 Notion 页面 ID）。后续同步优先保留本地已保存的 `commentId`，不会随着 Notion 标题或 Slug 的修改重新生成。创建译文时请指定原文的标识。
+
+组件支持中英文文案、明暗主题、靠近页尾时加载、15 秒加载超时与重试。GitHub 讨论入口在取得讨论信息后直达对应讨论，未取得时打开该仓库的讨论搜索页；首次讨论尚未创建时，搜索可能没有结果。
+
+本地模拟验证（不登录、不向 GitHub 发布评论）：
+
+```powershell
+$env:PLAYWRIGHT_TEST_COMMENTS = "1"
+pnpm build
+pnpm exec playwright test tests/e2e/comments.spec.ts
+Remove-Item Env:PLAYWRIGHT_TEST_COMMENTS
+pnpm build
+```
+
+该环境变量仅供测试，不能用于正式部署。生产启用后仍需实际验证一次 GitHub 登录、发表评论和回复，以及中英文是否显示同一条评论。
 
 ### 文章阅读量
 

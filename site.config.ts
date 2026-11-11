@@ -250,12 +250,12 @@ export const siteConfig: PublicSiteConfig = {
     articleReadCount: { enabled: true },
     cloudflareWebAnalytics: { enabled: false, token: "" },
     comments: {
-      category: "",
-      categoryId: "",
-      enabled: false,
+      category: "Comments",
+      categoryId: "DIC_kwDOVqAo6M4DK2Z4",
+      enabled: true,
       provider: "giscus",
-      repo: "",
-      repoId: "",
+      repo: "xj22yangyichen/Blog-Comments",
+      repoId: "R_kgDOVqAo6A",
     },
     googleAnalytics: { enabled: false, measurementId: "" },
     sponsorship: {

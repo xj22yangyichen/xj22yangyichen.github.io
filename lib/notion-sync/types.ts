@@ -16,6 +16,7 @@ export interface NotionArticleMetadata {
 
 export interface NotionArticleState {
   readonly slug: string;
+  readonly commentId?: string;
   readonly translationKey?: string;
 }
 

@@ -10,8 +10,19 @@ const completeSettings = {
 } as const;
 
 describe("Giscus configuration", () => {
-  it("keeps comments disabled until the owner configures a repository", () => {
-    expect(readGiscusConfig(false)).toBeNull();
+  it("allows comments to be disabled independently of repository settings", () => {
+    expect(
+      resolveGiscusConfig({ enabled: false, ...completeSettings }),
+    ).toBeNull();
+  });
+
+  it("loads the configured production discussion repository", () => {
+    expect(readGiscusConfig(false)).toEqual({
+      repo: "xj22yangyichen/Blog-Comments",
+      repoId: "R_kgDOVqAo6A",
+      category: "Comments",
+      categoryId: "DIC_kwDOVqAo6M4DK2Z4",
+    });
   });
 
   it("accepts an enabled central setting", () => {

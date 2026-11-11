@@ -16,6 +16,8 @@ const commentsContent = {
     loading: "正在加载评论",
     retry: "重新加载",
     title: "评论",
+    notice: "使用 GitHub 登录后参与讨论，评论将公开显示。",
+    github: "前往 GitHub 讨论",
   },
   en: {
     disabled: "Comments are not open yet.",
@@ -23,17 +25,24 @@ const commentsContent = {
     loading: "Loading comments",
     retry: "Try again",
     title: "Comments",
+    notice: "Sign in with GitHub to join the discussion. Comments are public.",
+    github: "Discuss on GitHub",
   },
 } as const satisfies Record<SiteLocale, object>;
 
 type CommentsStatus = "idle" | "loading" | "ready" | "error" | "disabled";
 
 interface GiscusCommentsProps {
+  readonly commentId?: string;
   readonly config: GiscusConfig | null;
   readonly locale: SiteLocale;
 }
 
-export function GiscusComments({ config, locale }: GiscusCommentsProps) {
+export function GiscusComments({
+  config,
+  locale,
+  commentId,
+}: GiscusCommentsProps) {
   const content = commentsContent[locale];
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? "dark" : "light";
@@ -41,6 +50,7 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
   const latestTheme = useRef(theme);
   const hostRef = useRef<HTMLDivElement>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
+  const [discussionUrl, setDiscussionUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<CommentsStatus>(
     config ? "idle" : "disabled",
   );
@@ -69,7 +79,7 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
   }, [config, loadAttempt]);
 
   useEffect(() => {
-    if (!config || loadAttempt === 0) return;
+    if (!config || !commentId || loadAttempt === 0) return;
     const host = hostRef.current;
     if (!host) return;
 
@@ -96,9 +106,36 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
       host.replaceChildren();
       setStatus("error");
     };
+    const onMessage = (event: MessageEvent) => {
+      const frame = host.querySelector<HTMLIFrameElement>(
+        "iframe.giscus-frame",
+      );
+      if (
+        event.origin !== "https://giscus.app" ||
+        !frame ||
+        event.source !== frame.contentWindow
+      )
+        return;
+      const message = event.data?.giscus;
+      const url = message?.discussion?.url;
+      if (typeof url === "string") {
+        try {
+          const parsed = new URL(url);
+          if (
+            parsed.origin === "https://github.com" &&
+            parsed.pathname.startsWith(`/${config.repo}/discussions/`)
+          )
+            setDiscussionUrl(parsed.href);
+        } catch {
+          /* Ignore malformed third-party metadata. */
+        }
+      }
+    };
+    window.addEventListener("message", onMessage);
 
     host.replaceChildren();
     setStatus("loading");
+    setDiscussionUrl(null);
     observer.observe(host, { childList: true, subtree: true });
 
     const script = document.createElement("script");
@@ -109,11 +146,12 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
     script.dataset.repoId = config.repoId;
     script.dataset.category = config.category;
     script.dataset.categoryId = config.categoryId;
-    script.dataset.mapping = "pathname";
+    script.dataset.mapping = "specific";
+    script.dataset.term = `post:${commentId}`;
     script.dataset.strict = "1";
     script.dataset.reactionsEnabled = "1";
-    script.dataset.emitMetadata = "0";
-    script.dataset.inputPosition = "bottom";
+    script.dataset.emitMetadata = "1";
+    script.dataset.inputPosition = "top";
     script.dataset.theme = latestTheme.current;
     script.dataset.lang = locale;
     script.dataset.loading = "lazy";
@@ -125,9 +163,10 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
       cancelled = true;
       clearTimeout(timeoutId);
       observer.disconnect();
+      window.removeEventListener("message", onMessage);
       host.replaceChildren();
     };
-  }, [config, loadAttempt, locale]);
+  }, [config, loadAttempt, locale, commentId]);
 
   useEffect(() => {
     latestTheme.current = theme;
@@ -154,6 +193,22 @@ export function GiscusComments({ config, locale }: GiscusCommentsProps) {
         <MessageSquareText aria-hidden="true" />
         <h2 id="article-comments-title">{content.title}</h2>
       </header>
+
+      {config ? (
+        <p className="article-comments-message article-comments-notice">
+          {content.notice}{" "}
+          <a
+            href={
+              discussionUrl ??
+              `https://github.com/${config.repo}/discussions?discussions_q=${encodeURIComponent(`"post:${commentId}"`)}`
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {content.github}
+          </a>
+        </p>
+      ) : null}
 
       {status === "disabled" ? (
         <p className="article-comments-message">{content.disabled}</p>

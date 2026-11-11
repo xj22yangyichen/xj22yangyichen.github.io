@@ -4,6 +4,7 @@ description: "用数学公式计算多米诺骨牌密铺矩形棋盘的方案数
 published: "2023-09-09T10:17:09+08:00"
 locale: zh-CN
 tags: ["数学", "题解"]
+commentId: "poj2411-mondriaans-dream-duo-mi-nuo-mi-pu-wen-ti"
 draft: false
 ---
 

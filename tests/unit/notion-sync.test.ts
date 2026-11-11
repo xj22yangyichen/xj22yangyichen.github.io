@@ -157,6 +157,29 @@ afterEach(async () => {
 });
 
 describe("Notion content mapping", () => {
+  it("creates an ASCII comment ID for legacy Unicode slugs", () => {
+    const mapped = mapNotionArticle(createArticlePage(), "Body", {
+      slug: "旧文章",
+    });
+    expect(mapped.frontmatter.commentId).toBe(
+      `notion-${pageId.replaceAll("-", "")}`,
+    );
+  });
+  it("preserves a saved comment ID when the Notion slug changes", async () => {
+    const page = createArticlePage();
+    page.properties.Slug = {
+      type: "rich_text",
+      rich_text: richText("renamed-post"),
+    } as unknown as PageObjectResponse["properties"][string];
+    const mapped = mapNotionArticle(page, "Body", {
+      slug: "old-post",
+      commentId: "original-discussion",
+    });
+    expect(mapped.slug).toBe("renamed-post");
+    expect(matter(await serializeNotionArticle(mapped)).data.commentId).toBe(
+      "original-discussion",
+    );
+  });
   it("creates a valid article document with a stable slug", async () => {
     const article = mapNotionArticle(
       createArticlePage(),
@@ -285,10 +308,15 @@ describe("Notion synchronization rules", () => {
     );
     await writeFile(
       originalPath,
-      (await readFile(originalPath, "utf8")).replace(
-        'source: "notion"',
-        'translationKey: "agent-guide"\nsource: "notion"',
-      ),
+      (await readFile(originalPath, "utf8"))
+        .replace(
+          'commentId: "ai-agent-34a4342e"',
+          'commentId: "saved-discussion"',
+        )
+        .replace(
+          'source: "notion"',
+          'translationKey: "agent-guide"\nsource: "notion"',
+        ),
       "utf8",
     );
     const renamedSource = new FakeNotionSource(
@@ -305,6 +333,9 @@ describe("Notion synchronization rules", () => {
     );
     expect(await readFile(originalPath, "utf8")).toContain(
       'translationKey: "agent-guide"',
+    );
+    expect(matter(await readFile(originalPath, "utf8")).data.commentId).toBe(
+      "saved-discussion",
     );
     await expect(
       readFile(

@@ -105,6 +105,7 @@ export function mapNotionArticle(
   const translationKey =
     readRichText(page.properties, "Translation Key") ??
     existing?.translationKey;
+  const initialCommentSlug = existing?.slug ?? slug;
   const frontmatter = articleFrontmatterSchema.parse({
     title,
     description: createDescription(
@@ -118,6 +119,12 @@ export function mapNotionArticle(
     draft: false,
     pinned: false,
     translationKey,
+    commentId:
+      existing?.commentId ??
+      readRichText(page.properties, "Comment ID") ??
+      (/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(initialCommentSlug)
+        ? initialCommentSlug
+        : `notion-${page.id.replaceAll("-", "").toLowerCase()}`),
     source: "notion",
     notionPageId: page.id,
   });
@@ -154,6 +161,8 @@ export async function serializeNotionArticle(
   lines.push(...data.tags.map((tag) => `  - ${JSON.stringify(tag)}`));
   lines.push(`draft: ${String(data.draft)}`, `pinned: ${String(data.pinned)}`);
   if (data.image) lines.push(`image: ${JSON.stringify(data.image)}`);
+  if (data.commentId)
+    lines.push(`commentId: ${JSON.stringify(data.commentId)}`);
   if (data.translationKey) {
     lines.push(`translationKey: ${JSON.stringify(data.translationKey)}`);
   }

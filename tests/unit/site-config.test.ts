@@ -19,7 +19,6 @@ describe("personal blog configuration", () => {
     expect(siteConfig.integrations.aiSearch.enabled).toBe(false);
     expect(siteConfig.integrations.analytics.enabled).toBe(false);
     expect(siteConfig.integrations.analytics.websiteId).toBe("");
-    expect(siteConfig.integrations.comments.repo).toBe("");
     expect(siteConfig.integrations.sponsorship.qrCodeSrc).toBe("");
     expect(siteConfig.integrations.googleAnalytics.measurementId).toBe("");
     expect(siteConfig.integrations.cloudflareWebAnalytics.token).toBe("");

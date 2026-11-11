@@ -35,6 +35,11 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
   const content = articleContent[article.locale];
   const postsHref = getLocalizedPath("/posts/", article.locale);
   const giscusConfig = readGiscusConfig();
+  if (giscusConfig && !article.commentId) {
+    throw new Error(
+      `${article.sourcePath}: add a permanent commentId before enabling comments.`,
+    );
+  }
   const advertisement = resolveAdPlacement("article", article.locale);
   const sponsorship = resolveSponsorship(article.locale);
 
@@ -106,7 +111,11 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
           navigation={navigation}
         />
         <SponsorshipSection sponsorship={sponsorship} />
-        <GiscusComments config={giscusConfig} locale={article.locale} />
+        <GiscusComments
+          config={giscusConfig}
+          locale={article.locale}
+          commentId={article.commentId}
+        />
       </ArticleLayout>
     </main>
   );

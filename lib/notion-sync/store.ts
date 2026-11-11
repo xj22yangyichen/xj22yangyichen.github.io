@@ -64,6 +64,9 @@ export async function readNotionArticleStateByPageId(
     }
     states.set(data.notionPageId, {
       slug,
+      ...(typeof data.commentId === "string"
+        ? { commentId: data.commentId }
+        : {}),
       ...(typeof data.translationKey === "string"
         ? { translationKey: data.translationKey }
         : {}),

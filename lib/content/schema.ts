@@ -44,6 +44,11 @@ export const articleFrontmatterSchema = z
     pinned: z.boolean().default(false),
     image: z.string().trim().startsWith("/").optional(),
     translationKey: translationKeySchema.optional(),
+    commentId: z
+      .string()
+      .trim()
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u)
+      .optional(),
     source: z.literal("notion").optional(),
     notionPageId: notionPageIdSchema.optional(),
   })
