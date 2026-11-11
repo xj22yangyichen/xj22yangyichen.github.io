@@ -16,8 +16,10 @@ const commentsContent = {
     loading: "正在加载评论",
     retry: "重新加载",
     title: "评论",
-    notice: "使用 GitHub 登录后参与讨论，评论将公开显示。",
+    notice: "使用 GitHub 登录后参与讨论，评论将公开显示，支持 Markdown 格式。",
+    manage: "如需编辑或删除自己的评论，请",
     github: "前往 GitHub 讨论",
+    manageHelp: "，在对应评论右上角的“⋯”菜单中操作。",
   },
   en: {
     disabled: "Comments are not open yet.",
@@ -25,8 +27,11 @@ const commentsContent = {
     loading: "Loading comments",
     retry: "Try again",
     title: "Comments",
-    notice: "Sign in with GitHub to join the discussion. Comments are public.",
-    github: "Discuss on GitHub",
+    notice:
+      "Sign in with GitHub to join the discussion. Comments are public and support Markdown.",
+    manage: "To edit or delete your own comments, ",
+    github: "open the discussion on GitHub",
+    manageHelp: " and use the “⋯” menu at the top right of your comment.",
   },
 } as const satisfies Record<SiteLocale, object>;
 
@@ -196,7 +201,9 @@ export function GiscusComments({
 
       {config ? (
         <p className="article-comments-message article-comments-notice">
-          {content.notice}{" "}
+          {content.notice}
+          <br />
+          {content.manage}
           <a
             href={
               discussionUrl ??
@@ -207,6 +214,7 @@ export function GiscusComments({
           >
             {content.github}
           </a>
+          {content.manageHelp}
         </p>
       ) : null}
 
