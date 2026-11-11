@@ -1,7 +1,7 @@
 import { PageIntro } from "@/components/page/page-intro";
 
 interface StaticPageProps {
-  readonly description: string;
+  readonly description?: string;
   readonly title: string;
 }
 

@@ -55,7 +55,13 @@ export function buildSitemap({
   articles,
 }: SitemapInput): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
-  const sectionPaths = ["/", "/posts/", "/links/"];
+  const sectionPaths = [
+    "/",
+    "/posts/",
+    "/publications/",
+    "/projects/",
+    "/links/",
+  ];
   const latestPublished = getPublishedArticles(articles, "zh-CN")[0]?.published;
 
   for (const basePath of sectionPaths) {

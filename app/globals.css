@@ -388,6 +388,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 28px;
   margin-top: 36px;

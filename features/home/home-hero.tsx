@@ -48,6 +48,20 @@ export function HomeHero({ locale, tags }: HomeHeroProps) {
             {content.readArticles}
             <ArrowUpRight aria-hidden="true" />
           </SiteLink>
+          <SiteLink
+            className="text-link"
+            href={getLocalizedPath("/publications/", locale)}
+          >
+            Publications
+            <ArrowUpRight aria-hidden="true" />
+          </SiteLink>
+          <SiteLink
+            className="text-link"
+            href={getLocalizedPath("/projects/", locale)}
+          >
+            Projects
+            <ArrowUpRight aria-hidden="true" />
+          </SiteLink>
         </div>
       </div>
 
