@@ -51,6 +51,8 @@ describe("localized navigation", () => {
     expect(englishItems.map((item) => item.key)).toEqual([
       "home",
       "posts",
+      "publications",
+      "projects",
       "links",
     ]);
     const postsItem = englishItems.find((item) => item.key === "posts");

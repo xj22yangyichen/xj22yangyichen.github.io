@@ -1,0 +1,112 @@
+.projects-page {
+  min-height: calc(100vh - 76px);
+  padding-block: 80px 110px;
+}
+.projects-page .page-intro {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+}
+.project-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.project-card-meta > :first-child {
+  color: var(--accent);
+  font-weight: 700;
+}
+.project-card h2 {
+  margin: 24px 0 10px;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+}
+.project-card h2 a:hover {
+  color: var(--accent);
+}
+.project-card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.project-card p {
+  margin: 18px 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: auto 0 24px;
+  padding: 0;
+  list-style: none;
+}
+.project-tags li {
+  padding: 5px 10px;
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 4px;
+  font-size: 12px;
+}
+.project-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.project-card-actions > .text-link {
+  color: var(--accent);
+}
+.project-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.project-source-link:hover {
+  color: var(--accent);
+}
+.project-source-link svg {
+  width: 15px;
+  height: 15px;
+}
+.project-subtitle {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1.7;
+}
+@media (max-width: 700px) {
+  .projects-page {
+    padding-block: 48px 72px;
+  }
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .project-card {
+    padding: 24px;
+  }
+  .project-subtitle {
+    font-size: 18px;
+  }
+}

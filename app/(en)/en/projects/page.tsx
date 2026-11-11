@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 
-import { StaticPage } from "@/features/static-page/static-page";
+import { ProjectsPage as ProjectsPageView } from "@/features/projects/projects-page";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  description: "Projects",
+  description:
+    "A collection of my projects, with notes on their design and implementation.",
   locale: "en",
   pathname: "/en/projects/",
   title: "Projects",
 });
 
 export default function ProjectsPage() {
-  return <StaticPage title="Projects" />;
+  return <ProjectsPageView locale="en" />;
 }

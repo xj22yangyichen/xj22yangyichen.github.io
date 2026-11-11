@@ -52,14 +52,14 @@ export function HomeHero({ locale, tags }: HomeHeroProps) {
             className="text-link"
             href={getLocalizedPath("/publications/", locale)}
           >
-            Publications
+            {locale === "en" ? "Publications" : "学术发表"}
             <ArrowUpRight aria-hidden="true" />
           </SiteLink>
           <SiteLink
             className="text-link"
             href={getLocalizedPath("/projects/", locale)}
           >
-            Projects
+            {locale === "en" ? "Projects" : "项目"}
             <ArrowUpRight aria-hidden="true" />
           </SiteLink>
         </div>

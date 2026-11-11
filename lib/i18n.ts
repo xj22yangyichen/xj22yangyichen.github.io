@@ -7,6 +7,8 @@ export const messages = {
     nav: {
       home: "首页",
       posts: "文章",
+      publications: "学术发表",
+      projects: "项目",
       archives: "归档",
       books: "图书",
       links: "友链",
@@ -22,6 +24,8 @@ export const messages = {
     nav: {
       home: "Home",
       posts: "Writing",
+      publications: "Publications",
+      projects: "Projects",
       archives: "Archive",
       books: "Books",
       links: "Friends",

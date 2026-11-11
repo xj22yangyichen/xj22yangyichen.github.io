@@ -48,6 +48,16 @@ pnpm preview
 
 ## 内容维护
 
+### 项目页面
+
+项目资料维护在 `features/projects/project-data.ts`，报告正文位于 `content/projects/<slug>.md`。
+
+- 项目按 `date` 从新到旧自动排序，中英文页面使用相同顺序；同一天的项目按 `slug` 升序排列。
+- `date` 使用补齐位数的 `YYYY-MM-DD` 格式，表示项目开始日期。现有四个项目使用 GitHub 仓库的创建日期作为依据，不使用最近更新时间。
+- 添加项目时，在 `projectEntries` 中填写日期和其他资料，并添加对应的 Markdown 报告即可，无需手动调整数组中的位置。后续修改报告内容也不需要更改项目日期。
+
+### 博客文章
+
 中文文章位于 `content/posts/zh/`，英文译文位于 `content/posts/en/`。文章示例：
 
 ```markdown
