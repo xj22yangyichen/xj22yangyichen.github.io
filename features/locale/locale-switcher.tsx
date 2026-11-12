@@ -8,6 +8,7 @@ import type { Key } from "react";
 
 import { getLocaleSwitchPath } from "@/lib/i18n";
 import type { LocaleRouteMap } from "@/lib/i18n";
+import { localePreferenceKey } from "@/lib/locale-preference";
 import type { SiteLocale } from "@/lib/site-config";
 
 interface LocaleSwitcherProps {
@@ -27,7 +28,14 @@ export function LocaleSwitcher({
   function handleLocaleChange(key: Key | null) {
     if (key !== "zh-CN" && key !== "en") return;
 
-    router.push(getLocaleSwitchPath(pathname, key, contentRoutes));
+    let target = getLocaleSwitchPath(pathname, key, contentRoutes);
+    try {
+      localStorage.setItem(localePreferenceKey, key);
+    } catch {
+      // Keep a manual Chinese selection usable even if storage is blocked.
+      if (target === "/") target = "/?lang=zh-CN";
+    }
+    router.push(target);
   }
 
   return (

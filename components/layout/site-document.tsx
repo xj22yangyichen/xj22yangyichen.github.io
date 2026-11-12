@@ -7,6 +7,7 @@ import { GoogleAnalyticsScript } from "@/components/integrations/google-analytic
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
 import { AiSearchEntry } from "@/features/ai-search/ai-search-entry";
+import { BrowserLocaleRedirect } from "@/features/locale/browser-locale-redirect";
 import { ThemeProvider } from "@/features/theme/theme-provider";
 import { buildContentLocaleRoutes } from "@/lib/content/locale-routes";
 import { getAllArticles, getAllBooks } from "@/lib/content/repository";
@@ -28,6 +29,7 @@ export async function SiteDocument({ children, locale }: SiteDocumentProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
+        <BrowserLocaleRedirect />
         <ThemeProvider>
           <SkipLink />
           <SiteHeader contentRoutes={contentRoutes} />
