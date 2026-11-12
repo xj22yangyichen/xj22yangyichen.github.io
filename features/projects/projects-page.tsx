@@ -20,55 +20,58 @@ export function ProjectsPage({ locale }: { readonly locale: SiteLocale }) {
         }
       />
       <div className="project-grid">
-        {projects.map((project, index) => (
-          <article className="project-card" key={project.slug}>
-            <div className="project-card-meta">
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <span>{project.course}</span>
-            </div>
-            <h2>
-              <SiteLink
-                href={getLocalizedPath(
-                  "/projects/" + project.slug + "/",
-                  locale,
-                )}
+        {projects.map((project, index) => {
+          const content = english ? project.en : project;
+          return (
+            <article className="project-card" key={project.slug}>
+              <div className="project-card-meta">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{content.course}</span>
+              </div>
+              <h2>
+                <SiteLink
+                  href={getLocalizedPath(
+                    "/projects/" + project.slug + "/",
+                    locale,
+                  )}
+                >
+                  {english ? project.name : project.nameZh}
+                </SiteLink>
+              </h2>
+              <h3 lang={locale}>{content.subtitle}</h3>
+              <p lang={locale}>{content.summary}</p>
+              <ul
+                className="project-tags"
+                aria-label={english ? "Technologies" : "技术主题"}
               >
-                {english ? project.name : project.nameZh}
-              </SiteLink>
-            </h2>
-            <h3 lang="zh-CN">{project.subtitle}</h3>
-            <p lang="zh-CN">{project.summary}</p>
-            <ul
-              className="project-tags"
-              aria-label={english ? "Technologies" : "技术主题"}
-            >
-              {project.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </ul>
-            <div className="project-card-actions">
-              <SiteLink
-                className="text-link"
-                href={getLocalizedPath(
-                  "/projects/" + project.slug + "/",
-                  locale,
-                )}
-              >
-                {english ? "Read report" : "阅读报告"}
-                <ArrowUpRight aria-hidden="true" />
-              </SiteLink>
-              <a
-                className="project-source-link"
-                href={project.repository}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {english ? "GitHub" : "项目源码"}
-                <ArrowUpRight aria-hidden="true" />
-              </a>
-            </div>
-          </article>
-        ))}
+                {content.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+              <div className="project-card-actions">
+                <SiteLink
+                  className="text-link"
+                  href={getLocalizedPath(
+                    "/projects/" + project.slug + "/",
+                    locale,
+                  )}
+                >
+                  {english ? "Read report" : "阅读报告"}
+                  <ArrowUpRight aria-hidden="true" />
+                </SiteLink>
+                <a
+                  className="project-source-link"
+                  href={project.repository}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {english ? "GitHub" : "项目源码"}
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </main>
   );

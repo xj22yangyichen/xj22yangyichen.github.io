@@ -4,6 +4,13 @@ const projectEntries = [
     date: "2025-12-04",
     name: "Bookstore",
     nameZh: "书店管理系统",
+    en: {
+      subtitle: "A bookstore management system with disk-based storage",
+      summary:
+        "Manage accounts, book indexes, inventory, and finances using an unrolled linked list to organize ordered data on disk.",
+      course: "CS1953 · Programming",
+      tags: ["C++", "Unrolled linked list", "File storage"],
+    },
     subtitle: "基于外存的书店管理系统",
     summary:
       "从账户权限、图书索引到库存与财务，使用块状链表组织文件中的有序数据。",
@@ -16,6 +23,13 @@ const projectEntries = [
     date: "2026-03-30",
     name: "STLite",
     nameZh: "STLite 容器库",
+    en: {
+      subtitle: "Implementing C++ containers from scratch",
+      summary:
+        "Five STL-style containers exploring memory management, iterators, red-black trees, binomial heaps, and exception safety.",
+      course: "CS1951 · Data Structures",
+      tags: ["C++", "Generic programming", "Data structures"],
+    },
     subtitle: "从零实现 C++ 容器",
     summary:
       "实现五种 STL 风格容器，探索内存管理、迭代器、红黑树、二项堆与异常安全。",
@@ -28,6 +42,14 @@ const projectEntries = [
     date: "2026-06-06",
     name: "Ticket System",
     nameZh: "火车票管理系统",
+    en: {
+      subtitle:
+        "A command-line system for ticket searches, purchases, waitlists, and refunds",
+      summary:
+        "A C++ system for user and train management, direct and transfer searches, ticket purchases, waitlists, order queries, and refunds, backed by a custom B+ tree.",
+      course: "CS1951 · Data Structures",
+      tags: ["C++", "B+ tree", "Domain modeling"],
+    },
     subtitle: "支持车票查询、购票候补与退票的命令行系统",
     summary:
       "使用 C++ 实现用户与车次管理、直达和换乘查询，以及购票、候补、订单查询和退票；通过自制 B+ 树在文件中存储业务数据。",
@@ -40,6 +62,13 @@ const projectEntries = [
     date: "2026-07-07",
     name: "Raft",
     nameZh: "Raft 共识与键值服务",
+    en: {
+      subtitle: "From consensus to a key-value service",
+      summary:
+        "Leader election, log replication, state persistence, and a simple key-value service built on the MIT 6.5840 lab framework.",
+      course: "CS1952 · PPCA",
+      tags: ["Go", "Distributed systems", "Raft"],
+    },
     subtitle: "从共识算法到键值服务",
     summary:
       "基于 MIT 6.5840 实验框架，实现选举、日志复制、状态持久化与简易键值服务。",

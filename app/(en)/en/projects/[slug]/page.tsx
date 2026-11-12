@@ -21,10 +21,10 @@ export async function generateMetadata({
   const project = findProject((await params).slug);
   if (!project) notFound();
   return buildPageMetadata({
-    description: project.summary,
+    description: project.en.summary,
     locale: "en",
     pathname: "/en/projects/" + project.slug + "/",
-    title: project.name + " · " + project.subtitle,
+    title: project.name + " · " + project.en.subtitle,
   });
 }
 

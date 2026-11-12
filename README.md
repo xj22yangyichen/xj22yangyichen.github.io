@@ -50,7 +50,7 @@ pnpm preview
 
 ### 项目页面
 
-项目资料维护在 `features/projects/project-data.ts`，报告正文位于 `content/projects/<slug>.md`。
+项目资料维护在 `features/projects/project-data.ts`，中文报告正文位于 `content/projects/<slug>.md`，对应英文译文位于 `content/projects/en/<slug>.md`。两种语言共用同一项目短名和日期。英文界面读取英文报告，并使用项目资料中的 `en` 字段展示英文副标题、简介、课程和标签；修改内容时应同步维护中英文版本。
 
 - 项目按 `date` 从新到旧自动排序，中英文页面使用相同顺序；同一天的项目按 `slug` 升序排列。
 - `date` 使用补齐位数的 `YYYY-MM-DD` 格式，表示项目开始日期。现有四个项目使用 GitHub 仓库的创建日期作为依据，不使用最近更新时间。

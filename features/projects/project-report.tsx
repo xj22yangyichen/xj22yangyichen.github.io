@@ -19,12 +19,18 @@ export async function ProjectReport({
   readonly project: Project;
   readonly locale: SiteLocale;
 }) {
+  const english = locale === "en";
+  const content = english ? project.en : project;
   const body = await readFile(
-    path.join(process.cwd(), "content/projects", project.slug + ".md"),
+    path.join(
+      process.cwd(),
+      "content/projects",
+      english ? "en" : "",
+      project.slug + ".md",
+    ),
     "utf8",
   );
   const { headings } = analyzeMarkdown(body);
-  const english = locale === "en";
 
   return (
     <main className="article-page project-report">
@@ -37,12 +43,12 @@ export async function ProjectReport({
           {english ? "All projects" : "全部项目"}
         </SiteLink>
         <div className="article-header-meta">
-          <span>{project.course}</span>
-          <span>{project.tags.join(" / ")}</span>
+          <span>{content.course}</span>
+          <span>{content.tags.join(" / ")}</span>
         </div>
         <h1>{english ? project.name : project.nameZh}</h1>
-        <p className="project-subtitle" lang="zh-CN">
-          {project.subtitle}
+        <p className="project-subtitle" lang={locale}>
+          {content.subtitle}
         </p>
         <a
           className="text-link"
@@ -53,11 +59,6 @@ export async function ProjectReport({
           {english ? "View source" : "查看源码"}
           <ArrowUpRight aria-hidden="true" />
         </a>
-        {english ? (
-          <p className="article-language-notice">
-            This report is currently available in Chinese.
-          </p>
-        ) : null}
       </header>
       <ArticleLayout
         hasToc={headings.length > 0}
@@ -72,7 +73,7 @@ export async function ProjectReport({
           />
         }
       >
-        <div lang="zh-CN">
+        <div lang={locale}>
           <MarkdownContent markdown={body} />
         </div>
       </ArticleLayout>
