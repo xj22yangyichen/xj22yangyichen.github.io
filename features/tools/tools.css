@@ -1,0 +1,248 @@
+.tools-page {
+  padding-block: 64px 100px;
+}
+.tools-page .page-intro {
+  margin-bottom: 36px;
+}
+.tools-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.tools-back:hover {
+  color: var(--accent);
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.tool-card {
+  display: block;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+.tool-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.tool-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 10px;
+}
+.tool-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.tool-category {
+  color: var(--muted);
+  font-size: 12px;
+}
+.tool-card h2 {
+  margin: 24px 0 10px;
+  font-size: 22px;
+}
+.tool-card p {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.tool-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+.tool-toolbar,
+.tool-secondary-actions,
+.tool-convert-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.tool-toolbar {
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.tool-mode {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.tool-mode button {
+  padding: 8px 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+}
+.tool-mode button[aria-pressed="true"] {
+  background: var(--bg);
+  color: var(--accent);
+  box-shadow: 0 1px 4px #00000012;
+  font-weight: 600;
+}
+.tool-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+.tool-button:hover:not(:disabled) {
+  background: var(--surface-strong);
+  color: var(--text);
+}
+.tool-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.tool-editors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.tool-editor {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+}
+.tool-editor:focus-within {
+  border-color: var(--accent);
+}
+.tool-editor-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 65px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.tool-editor-heading label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tool-editor-heading label span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.tool-editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 300px;
+  padding: 20px;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.tool-editor textarea:focus-visible {
+  outline-offset: -3px;
+}
+.tool-editor textarea::placeholder {
+  color: var(--muted);
+}
+.tool-output {
+  background: var(--surface);
+}
+.tool-editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 53px;
+  padding: 8px 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+.tool-convert-row {
+  margin-top: 24px;
+}
+.tool-primary {
+  min-height: 44px;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+.tool-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+  color: var(--bg);
+}
+.tool-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.tool-error {
+  padding: 12px 16px;
+  border: 1px solid var(--coral);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 14px;
+}
+@media (max-width: 1020px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .tools-page {
+    padding-block: 36px 64px;
+  }
+  .tools-grid,
+  .tool-editors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tool-editor textarea {
+    min-height: 220px;
+  }
+  .tool-editor-heading,
+  .tool-editor-footer {
+    padding-inline: 16px;
+  }
+}

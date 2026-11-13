@@ -53,6 +53,7 @@ describe("localized navigation", () => {
       "posts",
       "publications",
       "projects",
+      "tools",
       "links",
     ]);
     const postsItem = englishItems.find((item) => item.key === "posts");

@@ -40,6 +40,12 @@ const requiredFiles = [
   "search-index/en.json",
   "search-index/zh-CN.json",
   "sitemap.xml",
+  "tools/index.html",
+  "tools/base64/index.html",
+  "en/tools/index.html",
+  "en/tools/base64/index.html",
+  "tools/ascii/index.html",
+  "en/tools/ascii/index.html",
 ] as const;
 
 type HtmlNode = DefaultTreeAdapterMap["node"];

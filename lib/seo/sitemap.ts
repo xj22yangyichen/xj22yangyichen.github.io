@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/features/projects/project-data";
+import { tools } from "@/features/tools/registry";
 
 import { getPostHref } from "@/features/posts/post-links";
 import { getTagHref } from "@/features/tags/tag-links";
@@ -61,6 +62,8 @@ export function buildSitemap({
     "/posts/",
     "/publications/",
     "/projects/",
+    "/tools/",
+    ...tools.map(({ slug }) => `/tools/${slug}/`),
     ...projects.map(({ slug }) => `/projects/${slug}/`),
     "/links/",
   ];

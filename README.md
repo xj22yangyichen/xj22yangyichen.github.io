@@ -48,6 +48,14 @@ pnpm preview
 
 ## 内容维护
 
+### 工具箱
+
+工具箱与博客位于同一仓库，入口为 `/tools/`（英文 `/en/tools/`）。首个工具为 `/tools/base64/`，支持 UTF-8 文本的标准 Base64 编码、解码、复制和反向转换，输入内容仅在浏览器内处理。
+
+ASCII 工具位于 `/tools/ascii/`（英文 `/en/tools/ascii/`），支持标准 ASCII 字符与 0–127 十进制码互转。编码结果以空格分隔，解码接受空格、换行或逗号分隔，包含示例、复制、清空和反向转换。
+
+工具目录与展示信息维护在 `features/tools/registry.ts`，各工具的界面和处理逻辑放在 `features/tools/<slug>/`。新增工具时，在中英文路由下添加对应页面；站点地图会从工具目录中读取详情页地址。
+
 ### 项目页面
 
 项目资料维护在 `features/projects/project-data.ts`，中文报告正文位于 `content/projects/<slug>.md`，对应英文译文位于 `content/projects/en/<slug>.md`。两种语言共用同一项目短名和日期。英文界面读取英文报告，并使用项目资料中的 `en` 字段展示英文副标题、简介、课程和标签；修改内容时应同步维护中英文版本。
