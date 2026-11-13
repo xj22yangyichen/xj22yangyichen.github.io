@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.use({ reducedMotion: "reduce", colorScheme: "light" });
+test.use({ contextOptions: { reducedMotion: "reduce" }, colorScheme: "light" });
 
 test("toolbox navigation, Unicode conversion, copying and invalid input", async ({
   page,
