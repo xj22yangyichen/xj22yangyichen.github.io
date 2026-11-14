@@ -46,6 +46,8 @@ const requiredFiles = [
   "en/tools/base64/index.html",
   "tools/ascii/index.html",
   "en/tools/ascii/index.html",
+  "tools/diff/index.html",
+  "en/tools/diff/index.html",
 ] as const;
 
 type HtmlNode = DefaultTreeAdapterMap["node"];

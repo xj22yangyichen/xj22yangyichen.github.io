@@ -27,7 +27,17 @@ export const asciiTool = {
   category: { "zh-CN": "文本工具", en: "Text tools" },
 } as const satisfies Tool;
 
-export const tools: readonly Tool[] = [base64Tool, asciiTool];
+export const diffTool = {
+  slug: "diff",
+  title: { "zh-CN": "文本对比", en: "Text diff" },
+  description: {
+    "zh-CN": "比较两段文本，快速找到新增、删除与修改。",
+    en: "Compare two texts to see exactly what was added, removed or changed.",
+  },
+  category: { "zh-CN": "文本工具", en: "Text tools" },
+} as const satisfies Tool;
+
+export const tools: readonly Tool[] = [base64Tool, asciiTool, diffTool];
 
 export const toolboxCopy = {
   "zh-CN": {
