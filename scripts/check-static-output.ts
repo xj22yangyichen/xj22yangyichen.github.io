@@ -48,6 +48,12 @@ const requiredFiles = [
   "en/tools/ascii/index.html",
   "tools/diff/index.html",
   "en/tools/diff/index.html",
+  "tools/matrix-multiply/index.html",
+  "en/tools/matrix-multiply/index.html",
+  "tools/matrix-eigenvalues/index.html",
+  "en/tools/matrix-eigenvalues/index.html",
+  "tools/matrix-inverse/index.html",
+  "en/tools/matrix-inverse/index.html",
 ] as const;
 
 type HtmlNode = DefaultTreeAdapterMap["node"];

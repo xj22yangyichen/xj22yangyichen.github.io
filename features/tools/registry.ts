@@ -37,7 +37,44 @@ export const diffTool = {
   category: { "zh-CN": "文本工具", en: "Text tools" },
 } as const satisfies Tool;
 
-export const tools: readonly Tool[] = [base64Tool, asciiTool, diffTool];
+export const matrixTools = {
+  multiply: {
+    slug: "matrix-multiply",
+    title: { "zh-CN": "矩阵乘法", en: "Matrix multiplication" },
+    description: {
+      "zh-CN": "计算两个矩阵的乘积 A × B。",
+      en: "Calculate the product of two matrices, A × B.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
+  eigenvalues: {
+    slug: "matrix-eigenvalues",
+    title: { "zh-CN": "求矩阵特征值", en: "Matrix eigenvalues" },
+    description: {
+      "zh-CN": "求实方阵的特征值，支持实数与复数结果。",
+      en: "Find the real and complex eigenvalues of a real square matrix.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
+  inverse: {
+    slug: "matrix-inverse",
+    title: { "zh-CN": "矩阵求逆", en: "Matrix inverse" },
+    description: {
+      "zh-CN": "计算可逆方阵的逆矩阵。",
+      en: "Calculate the inverse of an invertible square matrix.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
+} as const satisfies Record<string, Tool>;
+
+export type MatrixOperation = keyof typeof matrixTools;
+
+export const tools: readonly Tool[] = [
+  base64Tool,
+  asciiTool,
+  diffTool,
+  ...Object.values(matrixTools),
+];
 
 export const toolboxCopy = {
   "zh-CN": {

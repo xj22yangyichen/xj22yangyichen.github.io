@@ -188,6 +188,14 @@
 .tool-output {
   background: var(--surface);
 }
+.matrix-product {
+  grid-column: 1 / -1;
+}
+.matrix-hint {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
 .tool-editor-footer {
   display: flex;
   align-items: center;
