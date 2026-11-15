@@ -28,7 +28,13 @@ export function ToolsPage({ locale }: { readonly locale: SiteLocale }) {
               key={tool.slug}
             >
               <span className="tool-icon">
-                <Icon aria-hidden="true" />
+                {tool.slug === "comment-remover" ? (
+                  <span className="tool-icon-code" aria-hidden="true">
+                    {"/**/"}
+                  </span>
+                ) : (
+                  <Icon aria-hidden="true" />
+                )}
               </span>
               <h2>{tool.title[locale]}</h2>
             </SiteLink>

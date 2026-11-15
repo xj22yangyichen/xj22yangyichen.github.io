@@ -50,6 +50,12 @@
   width: 20px;
   height: 20px;
 }
+.tool-icon-code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
 .tool-card h2 {
   min-width: 0;
   margin: 0;
