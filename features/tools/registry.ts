@@ -1,6 +1,6 @@
 import type { LocalizedText } from "@/site.config";
 
-export type ToolCategory = "text" | "math";
+export type ToolCategory = "text" | "math" | "time";
 
 interface Tool {
   readonly slug: string;
@@ -103,7 +103,19 @@ export const integerTools = {
 
 export type IntegerOperation = keyof typeof integerTools;
 
+export const timestampTool = {
+  categoryId: "time",
+  slug: "timestamp",
+  title: { "zh-CN": "Unix 时间戳转换", en: "Unix timestamp converter" },
+  description: {
+    "zh-CN": "在日期时间与 Unix 时间戳之间双向转换，支持秒、毫秒与时区选择。",
+    en: "Convert between dates and Unix timestamps, with seconds, milliseconds and time zones.",
+  },
+  category: { "zh-CN": "时间工具", en: "Time tools" },
+} as const satisfies Tool;
+
 export const tools: readonly Tool[] = [
+  timestampTool,
   base64Tool,
   asciiTool,
   diffTool,

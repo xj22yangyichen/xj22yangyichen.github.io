@@ -247,6 +247,19 @@
   color: var(--text);
   font-size: 14px;
 }
+.timestamp-workbench .tool-mode {
+  flex-wrap: wrap;
+}
+.timestamp-workbench .matrix-precision {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.timestamp-workbench select {
+  max-width: 100%;
+}
+.timestamp-workbench textarea {
+  min-height: 160px;
+}
 @media (max-width: 1020px) {
   .tools-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
