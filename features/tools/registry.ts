@@ -78,11 +78,37 @@ export const matrixTools = {
 
 export type MatrixOperation = keyof typeof matrixTools;
 
+export const integerTools = {
+  prime: {
+    categoryId: "math",
+    slug: "primality",
+    title: { "zh-CN": "质数判断", en: "Primality test" },
+    description: {
+      "zh-CN": "准确判断一个整数是否为质数，支持 2^60 以内的数字。",
+      en: "Check whether an integer is prime, with exact results up to 2^60.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
+  factor: {
+    categoryId: "math",
+    slug: "prime-factorization",
+    title: { "zh-CN": "质因数分解", en: "Prime factorization" },
+    description: {
+      "zh-CN": "将整数分解为质因数的乘积，支持 2^60 以内的数字。",
+      en: "Factor an integer into primes, with exact results up to 2^60.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
+} as const satisfies Record<string, Tool>;
+
+export type IntegerOperation = keyof typeof integerTools;
+
 export const tools: readonly Tool[] = [
   base64Tool,
   asciiTool,
   diffTool,
   ...Object.values(matrixTools),
+  ...Object.values(integerTools),
 ];
 
 export const toolboxCopy = {

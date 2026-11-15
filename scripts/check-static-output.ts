@@ -54,6 +54,10 @@ const requiredFiles = [
   "en/tools/matrix-eigenvalues/index.html",
   "tools/matrix-inverse/index.html",
   "en/tools/matrix-inverse/index.html",
+  "tools/primality/index.html",
+  "en/tools/primality/index.html",
+  "tools/prime-factorization/index.html",
+  "en/tools/prime-factorization/index.html",
 ] as const;
 
 type HtmlNode = DefaultTreeAdapterMap["node"];
