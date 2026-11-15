@@ -114,7 +114,19 @@ export const timestampTool = {
   category: { "zh-CN": "时间工具", en: "Time tools" },
 } as const satisfies Tool;
 
+export const commentRemoverTool = {
+  categoryId: "text",
+  slug: "comment-remover",
+  title: { "zh-CN": "删除代码注释", en: "Code comment remover" },
+  description: {
+    "zh-CN": "删除 C/C++、Rust、Python 和 Go 代码中的注释，保留字符串与换行。",
+    en: "Remove comments from C/C++, Rust, Python and Go while preserving strings and line breaks.",
+  },
+  category: { "zh-CN": "文本工具", en: "Text tools" },
+} as const satisfies Tool;
+
 export const tools: readonly Tool[] = [
+  commentRemoverTool,
   timestampTool,
   base64Tool,
   asciiTool,

@@ -46,6 +46,8 @@ const requiredFiles = [
   "en/tools/base64/index.html",
   "tools/ascii/index.html",
   "en/tools/ascii/index.html",
+  "tools/comment-remover/index.html",
+  "en/tools/comment-remover/index.html",
   "tools/diff/index.html",
   "en/tools/diff/index.html",
   "tools/matrix-multiply/index.html",
