@@ -1,13 +1,17 @@
 import type { LocalizedText } from "@/site.config";
 
+export type ToolCategory = "text" | "math";
+
 interface Tool {
   readonly slug: string;
   readonly title: LocalizedText;
   readonly description: LocalizedText;
   readonly category: LocalizedText;
+  readonly categoryId: ToolCategory;
 }
 
 export const base64Tool = {
+  categoryId: "text",
   slug: "base64",
   title: { "zh-CN": "Base64 编码与解码", en: "Base64 encoder & decoder" },
   description: {
@@ -18,6 +22,7 @@ export const base64Tool = {
 } as const satisfies Tool;
 
 export const asciiTool = {
+  categoryId: "text",
   slug: "ascii",
   title: { "zh-CN": "ASCII 编码与解码", en: "ASCII encoder & decoder" },
   description: {
@@ -28,6 +33,7 @@ export const asciiTool = {
 } as const satisfies Tool;
 
 export const diffTool = {
+  categoryId: "text",
   slug: "diff",
   title: { "zh-CN": "文本对比", en: "Text diff" },
   description: {
@@ -39,6 +45,7 @@ export const diffTool = {
 
 export const matrixTools = {
   multiply: {
+    categoryId: "math",
     slug: "matrix-multiply",
     title: { "zh-CN": "矩阵乘法", en: "Matrix multiplication" },
     description: {
@@ -48,6 +55,7 @@ export const matrixTools = {
     category: { "zh-CN": "数学工具", en: "Math tools" },
   },
   eigenvalues: {
+    categoryId: "math",
     slug: "matrix-eigenvalues",
     title: { "zh-CN": "求矩阵特征值", en: "Matrix eigenvalues" },
     description: {
@@ -57,6 +65,7 @@ export const matrixTools = {
     category: { "zh-CN": "数学工具", en: "Math tools" },
   },
   inverse: {
+    categoryId: "math",
     slug: "matrix-inverse",
     title: { "zh-CN": "矩阵求逆", en: "Matrix inverse" },
     description: {
