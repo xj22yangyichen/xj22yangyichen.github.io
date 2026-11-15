@@ -1,10 +1,4 @@
-import {
-  ArrowUpRight,
-  Calculator,
-  Clock,
-  Type,
-  type LucideIcon,
-} from "lucide-react";
+import { Calculator, Clock, Type, type LucideIcon } from "lucide-react";
 
 import { PageIntro } from "@/components/page/page-intro";
 import { SiteLink } from "@/components/ui/site-link";
@@ -21,7 +15,6 @@ const categoryIcons = {
 } satisfies Record<ToolCategory, LucideIcon>;
 
 export function ToolsPage({ locale }: { readonly locale: SiteLocale }) {
-  const english = locale === "en";
   return (
     <main className="shell tools-page">
       <PageIntro {...toolboxCopy[locale]} />
@@ -34,18 +27,10 @@ export function ToolsPage({ locale }: { readonly locale: SiteLocale }) {
               href={getLocalizedPath(`/tools/${tool.slug}/`, locale)}
               key={tool.slug}
             >
-              <div className="tool-card-top">
-                <span className="tool-icon">
-                  <Icon aria-hidden="true" />
-                </span>
-                <span className="tool-category">{tool.category[locale]}</span>
-              </div>
-              <h2>{tool.title[locale]}</h2>
-              <p>{tool.description[locale]}</p>
-              <span className="tool-card-link">
-                {english ? "Open tool" : "打开工具"}
-                <ArrowUpRight aria-hidden="true" />
+              <span className="tool-icon">
+                <Icon aria-hidden="true" />
               </span>
+              <h2>{tool.title[locale]}</h2>
             </SiteLink>
           );
         })}

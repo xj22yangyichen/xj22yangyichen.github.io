@@ -18,11 +18,14 @@
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 12px;
 }
 .tool-card {
-  display: block;
-  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
   border: 1px solid var(--line);
   border-radius: 12px;
   transition:
@@ -33,45 +36,26 @@
   border-color: var(--accent);
   background: var(--surface);
 }
-.tool-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
 .tool-icon {
   display: grid;
-  width: 44px;
-  height: 44px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
   place-items: center;
   background: var(--accent-soft);
   color: var(--accent);
   border-radius: 10px;
 }
 .tool-icon svg {
-  width: 24px;
-  height: 24px;
-}
-.tool-category {
-  color: var(--muted);
-  font-size: 12px;
+  width: 20px;
+  height: 20px;
 }
 .tool-card h2 {
-  margin: 24px 0 10px;
-  font-size: 22px;
-}
-.tool-card p {
-  margin: 0 0 28px;
-  color: var(--muted);
-  font-size: 14px;
-}
-.tool-card-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 600;
+  min-width: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 .tool-toolbar,
 .tool-secondary-actions,
