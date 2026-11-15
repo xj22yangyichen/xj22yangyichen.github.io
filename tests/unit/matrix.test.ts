@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   calculateMatrix,
+  formatNumber,
   MatrixError,
   parseMatrix,
 } from "@/features/tools/matrix/calculate";
@@ -43,12 +44,13 @@ describe("matrix tools", () => {
       new MatrixError("dimensions"),
     );
   });
-  it("inverts with row pivoting and preserves small nonzero values", () => {
+  it("inverts with row pivoting and rounds small values at the selected precision", () => {
     expect(calculateMatrix("inverse", "0 2\n1 0")).toBe("0 1\n0.5 0");
-    expect(calculateMatrix("inverse", "1e20")).toBe("1e-20");
+    expect(calculateMatrix("inverse", "1e20")).toBe("0");
+    expect(calculateMatrix("inverse", "1e10", "", 10)).toBe("0.0000000001");
     const a = "4 7 2\n3 6 1\n2 5 3";
     const product = parseMatrix(
-      calculateMatrix("multiply", a, calculateMatrix("inverse", a)),
+      calculateMatrix("multiply", a, calculateMatrix("inverse", a, "", 10), 10),
     );
     product.forEach((row, i) =>
       row.forEach((value, j) => expect(value).toBeCloseTo(i === j ? 1 : 0, 9)),
@@ -89,6 +91,36 @@ describe("matrix tools", () => {
   it("reports numeric overflow", () => {
     expect(() => calculateMatrix("multiply", "1e308", "2")).toThrow(
       new MatrixError("numeric"),
+    );
+  });
+  it.each([
+    [1.234567, 4, "1.2346"],
+    [1.23, 4, "1.23"],
+    [2, 4, "2"],
+    [1.99999, 4, "2"],
+    [-0.00001, 4, "0"],
+    [1.5, 0, "2"],
+    [-1.5, 0, "-2"],
+    [1.005, 2, "1.01"],
+    [0.12345678906, 10, "0.1234567891"],
+    [1e-7, 10, "0.0000001"],
+    [1e21, 4, "1000000000000000000000"],
+  ])("formats %s to %s decimal places", (value, places, expected) => {
+    expect(formatNumber(value, places)).toBe(expected);
+  });
+  it("applies precision to all operations and both complex components", () => {
+    expect(calculateMatrix("multiply", "1.23456", "1")).toBe("1.2346");
+    expect(calculateMatrix("inverse", "3", "", 2)).toBe("0.33");
+    expect(
+      calculateMatrix(
+        "eigenvalues",
+        "1.23456 -0.123456\n0.123456 1.23456",
+        "",
+        2,
+      ),
+    ).toBe("1.23 + 0.12i\n1.23 - 0.12i");
+    expect(calculateMatrix("eigenvalues", "1 -0.00001\n0.00001 1")).toBe(
+      "1\n1",
     );
   });
 });

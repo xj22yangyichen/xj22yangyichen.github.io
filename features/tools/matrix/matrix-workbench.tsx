@@ -48,6 +48,7 @@ export function MatrixWorkbench({
   const [a, setA] = useState("");
   const [b, setB] = useState("");
   const [output, setOutput] = useState("");
+  const [decimalPlaces, setDecimalPlaces] = useState(4);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   function reset() {
@@ -55,10 +56,10 @@ export function MatrixWorkbench({
     setError("");
     setStatus("");
   }
-  function calculate() {
+  function calculate(places = decimalPlaces) {
     reset();
     try {
-      setOutput(calculateMatrix(operation, a, b));
+      setOutput(calculateMatrix(operation, a, b, places));
       setStatus(en ? "Calculation complete." : "计算完成。");
     } catch (cause) {
       setError(
@@ -70,10 +71,30 @@ export function MatrixWorkbench({
     <section aria-label={matrixTools[operation].title[locale]}>
       <p id="matrix-hint" className="matrix-hint">
         {en
-          ? "Separate rows with line breaks and numbers with spaces or commas. Real numbers only; up to 50 × 50. Results are rounded to 12 significant digits; ill-conditioned matrices may lose accuracy."
-          : "每行用换行分隔，数字之间用空格或逗号分隔。支持实数，最大 50 × 50；结果保留 12 位有效数字，病态矩阵可能存在精度误差。"}
+          ? "Separate rows with line breaks and numbers with spaces or commas. Real numbers only; up to 50 × 50. Results are rounded to the selected decimal places, with trailing zeros omitted. Ill-conditioned matrices may lose accuracy."
+          : "每行用换行分隔，数字之间用空格或逗号分隔。支持实数，最大 50 × 50；结果按所选小数位数四舍五入，省略末尾的零。病态矩阵可能存在精度误差。"}
       </p>
       <div className="tool-toolbar">
+        <div className="matrix-precision">
+          <label htmlFor="matrix-decimal-places">
+            {en ? "Decimal places" : "小数位数"}
+          </label>
+          <select
+            id="matrix-decimal-places"
+            value={decimalPlaces}
+            onChange={(event) => {
+              const places = Number(event.target.value);
+              setDecimalPlaces(places);
+              if (output) calculate(places);
+            }}
+          >
+            {Array.from({ length: 11 }, (_, places) => (
+              <option key={places} value={places}>
+                {places}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="tool-secondary-actions">
           <button
             type="button"
@@ -170,7 +191,7 @@ export function MatrixWorkbench({
           type="button"
           className="tool-button tool-primary"
           disabled={!a.trim() || (multiply && !b.trim())}
-          onClick={calculate}
+          onClick={() => calculate()}
         >
           {en ? "Calculate" : "计算"}
         </button>

@@ -52,6 +52,9 @@ test("English matrix pages fit mobile screens", async ({ page }) => {
       "Matrix",
     );
     await page.getByRole("button", { name: "Try an example" }).click();
+    await expect(
+      page.getByRole("combobox", { name: "Decimal places" }),
+    ).toHaveValue("4");
     await page.getByRole("button", { name: "Calculate", exact: true }).click();
     await expect(page.locator("#matrix-output")).not.toHaveValue("");
     expect(
@@ -59,5 +62,44 @@ test("English matrix pages fit mobile screens", async ({ page }) => {
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+  }
+});
+
+test("decimal precision updates existing results without losing digits", async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  for (const slug of [
+    "matrix-multiply",
+    "matrix-eigenvalues",
+    "matrix-inverse",
+  ]) {
+    await page.goto(`/tools/${slug}/`);
+    const precision = page.getByRole("combobox", { name: "小数位数" });
+    await expect(precision).toHaveValue("4");
+    await expect(precision.locator("option")).toHaveCount(11);
+    await page
+      .locator("#matrix-a")
+      .fill(slug === "matrix-inverse" ? "3" : "0.3333333333333333");
+    if (slug === "matrix-multiply") await page.locator("#matrix-b").fill("1");
+    await page.getByRole("button", { name: "计算", exact: true }).click();
+    await expect(page.locator("#matrix-output")).toHaveValue("0.3333");
+    await precision.selectOption("0");
+    await expect(page.locator("#matrix-output")).toHaveValue("0");
+    await precision.selectOption("10");
+    await expect(page.locator("#matrix-output")).toHaveValue("0.3333333333");
+    await precision.selectOption("2");
+    await page.getByRole("button", { name: "复制结果" }).click();
+    await expect(page.getByRole("status")).toHaveText("已复制");
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      "0.33",
+    );
+    await page
+      .locator("#matrix-a")
+      .fill(slug === "matrix-inverse" ? "0.5" : "2");
+    await expect(page.locator("#matrix-output")).toHaveValue("");
+    await page.getByRole("button", { name: "计算", exact: true }).click();
+    await expect(page.locator("#matrix-output")).toHaveValue("2");
   }
 });

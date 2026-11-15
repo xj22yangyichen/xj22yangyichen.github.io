@@ -191,6 +191,20 @@
 .matrix-product {
   grid-column: 1 / -1;
 }
+.matrix-precision {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.matrix-precision select {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
 .matrix-hint {
   color: var(--muted);
   font-size: 14px;
