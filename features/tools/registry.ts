@@ -129,8 +129,9 @@ export const commentRemoverTool = {
   slug: "comment-remover",
   title: { "zh-CN": "删除代码注释", en: "Code comment remover" },
   description: {
-    "zh-CN": "删除 C/C++、Rust、Python 和 Go 代码中的注释，保留字符串与换行。",
-    en: "Remove comments from C/C++, Rust, Python and Go while preserving strings and line breaks.",
+    "zh-CN":
+      "删除 C/C++、Rust、Python、Go、Java、JavaScript 和 PHP 代码中的注释，支持自定义注释规则。",
+    en: "Remove comments from C/C++, Rust, Python, Go, Java, JavaScript and PHP, or define custom comment rules.",
   },
   category: { "zh-CN": "文本工具", en: "Text tools" },
 } as const satisfies Tool;

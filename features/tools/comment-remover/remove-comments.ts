@@ -1,13 +1,40 @@
-export type CodeLanguage = "cpp" | "rust" | "python" | "go";
+import { removeJavaScriptComments } from "./javascript";
+
+export type CodeLanguage =
+  "cpp" | "rust" | "python" | "go" | "java" | "javascript" | "php" | "custom";
+export interface CommentRules {
+  readonly line: string;
+  readonly blockStart: string;
+  readonly blockEnd: string;
+}
+
+export function validCommentRules(rules: CommentRules): boolean {
+  return (
+    Boolean(rules.line || rules.blockStart) &&
+    Boolean(rules.blockStart) === Boolean(rules.blockEnd) &&
+    !Object.values(rules).some((value) => /[\r\n]/.test(value))
+  );
+}
 
 /** Scan literals before comments; replacing block comments with whitespace keeps tokens apart. */
-export function removeComments(source: string, language: CodeLanguage): string {
+export function removeComments(
+  source: string,
+  language: CodeLanguage,
+  rules?: CommentRules,
+): string {
+  if (language === "javascript") return removeJavaScriptComments(source);
+  if (language === "custom" && (!rules || !validCommentRules(rules)))
+    throw new Error("Invalid comment rules");
+  const line = language === "custom" ? rules!.line : "//";
+  const blockStart = language === "custom" ? rules!.blockStart : "/*";
+  const blockEnd = language === "custom" ? rules!.blockEnd : "*/";
   const removals: { start: number; end: number; block: boolean }[] = [];
   const length = source.length;
 
   function lineComment(start: number): number {
     let end = start;
     while (end < length && source[end] !== "\n" && source[end] !== "\r") {
+      if (language === "php" && source.startsWith("?>", end)) break;
       if (language === "cpp" && source[end] === "\\") {
         if (source[end + 1] === "\n") {
           end += 2;
@@ -86,7 +113,23 @@ export function removeComments(source: string, language: CodeLanguage): string {
   }
 
   let i = 0;
+  const phpTagged = language === "php" && /<\?(?:php\b|=)/i.test(source);
+  let inPhp = !phpTagged;
   while (i < length) {
+    if (phpTagged && !inPhp) {
+      const opening = /<\?(?:php\b|=)/gi;
+      opening.lastIndex = i;
+      const match = opening.exec(source);
+      if (!match) break;
+      i = opening.lastIndex;
+      inPhp = true;
+      continue;
+    }
+    if (phpTagged && source.startsWith("?>", i)) {
+      inPhp = false;
+      i += 2;
+      continue;
+    }
     const c = source[i];
     if (language === "python") {
       if (c === '"' || c === "'") {
@@ -98,6 +141,32 @@ export function removeComments(source: string, language: CodeLanguage): string {
         continue;
       }
     } else {
+      if (language === "java" && source.startsWith('"""', i)) {
+        i = quoted(i, '"""');
+        continue;
+      }
+      if (language === "php" && source.startsWith("<<<", i)) {
+        const opening =
+          /^<<<[ \t]*(?:'([A-Za-z_][\w]*)'|"([A-Za-z_][\w]*)"|([A-Za-z_][\w]*))[ \t]*\r?\n/.exec(
+            source.slice(i),
+          );
+        if (opening) {
+          const label = opening[1] ?? opening[2] ?? opening[3];
+          const closing = new RegExp(`^[ \\t]*${label}(?![\\w])`, "gm");
+          closing.lastIndex = i + opening[0].length;
+          const match = closing.exec(source);
+          i = match ? closing.lastIndex : length;
+          continue;
+        }
+      }
+      if (language === "php" && c === "#" && source[i + 1] !== "[") {
+        i = lineComment(i);
+        continue;
+      }
+      if ((language === "php" || language === "custom") && c === "`") {
+        i = quoted(i, "`");
+        continue;
+      }
       if (
         language === "cpp" &&
         /[0-9]/.test(c!) &&
@@ -145,21 +214,30 @@ export function removeComments(source: string, language: CodeLanguage): string {
         i = quoted(i, c);
         continue;
       }
-      if (source.startsWith("//", i)) {
+      // Prefer the longer opener when custom rules share a prefix.
+      if (
+        line &&
+        source.startsWith(line, i) &&
+        !(
+          blockStart &&
+          blockStart.length > line.length &&
+          source.startsWith(blockStart, i)
+        )
+      ) {
         i = lineComment(i);
         continue;
       }
-      if (source.startsWith("/*", i)) {
+      if (blockStart && source.startsWith(blockStart, i)) {
         const start = i;
         let depth = 1;
-        i += 2;
+        i += blockStart.length;
         while (i < length && depth > 0) {
           if (language === "rust" && source.startsWith("/*", i)) {
             depth++;
             i += 2;
-          } else if (source.startsWith("*/", i)) {
+          } else if (source.startsWith(blockEnd, i)) {
             depth--;
-            i += 2;
+            i += blockEnd.length;
           } else i++;
         }
         removals.push({ start, end: i, block: true });

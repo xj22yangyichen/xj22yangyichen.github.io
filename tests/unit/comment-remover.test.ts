@@ -1,10 +1,95 @@
 import { describe, expect, it } from "vitest";
 import {
   removeComments,
+  validCommentRules,
   type CodeLanguage,
 } from "@/features/tools/comment-remover/remove-comments";
 
 describe("code comment removal", () => {
+  it.each<CodeLanguage>(["java", "javascript", "php"])(
+    "removes ordinary %s comments",
+    (language) => {
+      expect(
+        removeComments(
+          'x = "https://host/#text"; /* note */ // end\n',
+          language,
+        ),
+      ).toBe('x = "https://host/#text";   \n');
+    },
+  );
+  it("preserves Java text blocks", () => {
+    const code = 'String s = """\n" // text\n/* text */\n""";';
+    expect(removeComments(code + "// end", "java")).toBe(code);
+  });
+  it("handles JavaScript regex, division and nested template expressions", () => {
+    const code = "const r = /[/*]+https?:\\/\\//g; const n = {} / 2;";
+    expect(removeComments(code + " // end", "javascript")).toBe(code + " ");
+    expect(
+      removeComments(
+        "const s = `// keep ${1 /* note */ + `${2 // end\n}`} /* keep */`;",
+        "javascript",
+      ),
+    ).toBe("const s = `// keep ${1   + `${2 \n}`} /* keep */`;");
+    expect(removeComments("if (ok) /[/*]/.test(x); // end", "javascript")).toBe(
+      "if (ok) /[/*]/.test(x); ",
+    );
+    expect(() =>
+      removeComments('const s = "unfinished', "javascript"),
+    ).toThrow();
+  });
+  it("preserves PHP attributes, heredoc/nowdoc, strings and HTML outside tags", () => {
+    expect(
+      removeComments(
+        '<?php #[Route("/#path")] // note\n$x = "# keep"; # end\n?> // HTML',
+        "php",
+      ),
+    ).toBe('<?php #[Route("/#path")] \n$x = "# keep"; \n?> // HTML');
+    for (const label of ["TEXT", "'TEXT'", '"TEXT"']) {
+      const code = `<?php\n$x = <<<${label}\n# keep\n/* keep */\nTEXT;`;
+      expect(removeComments(code + " // end", "php")).toBe(code + " ");
+    }
+    expect(removeComments("<?php // end ?>HTML", "php")).toBe("<?php ?>HTML");
+  });
+  it("matches literal custom markers, preserves quotes and prefers longer openers", () => {
+    expect(
+      removeComments('x(* multi\nline *)y; -- end\n"-- keep"', "custom", {
+        line: "--",
+        blockStart: "(*",
+        blockEnd: "*)",
+      }),
+    ).toBe('x \ny; \n"-- keep"');
+    expect(
+      removeComments("x // note\ny /* note */ z", "custom", {
+        line: "/",
+        blockStart: "/*",
+        blockEnd: "*/",
+      }),
+    ).toBe("x \ny   z");
+    expect(
+      removeComments("x # end\n/* keep */", "custom", {
+        line: "#",
+        blockStart: "",
+        blockEnd: "",
+      }),
+    ).toBe("x \n/* keep */");
+    expect(
+      removeComments("x <!-- end --> y // keep", "custom", {
+        line: "",
+        blockStart: "<!--",
+        blockEnd: "-->",
+      }),
+    ).toBe("x   y // keep");
+  });
+  it("rejects missing and incomplete custom rules", () => {
+    for (const rules of [
+      { line: "", blockStart: "", blockEnd: "" },
+      { line: "#", blockStart: "/*", blockEnd: "" },
+      { line: "\n", blockStart: "", blockEnd: "" },
+    ]) {
+      expect(validCommentRules(rules)).toBe(false);
+      expect(() => removeComments("code", "custom", rules)).toThrow();
+    }
+  });
   it.each<CodeLanguage>(["cpp", "rust", "python", "go"])(
     "preserves empty and comment-free %s code",
     (language) => {
