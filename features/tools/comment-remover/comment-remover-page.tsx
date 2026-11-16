@@ -15,7 +15,7 @@ export function CommentRemoverPage({
   readonly locale: SiteLocale;
 }) {
   return (
-    <main className="shell tools-page">
+    <main className="shell tools-page comment-remover-page">
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}

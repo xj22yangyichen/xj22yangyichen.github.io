@@ -4,6 +4,10 @@
 .tools-page .page-intro {
   margin-bottom: 36px;
 }
+.comment-remover-page .page-intro,
+.comment-remover-page .page-intro p {
+  max-width: none;
+}
 .tools-back {
   display: inline-flex;
   align-items: center;
