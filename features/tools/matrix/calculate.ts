@@ -71,7 +71,7 @@ function formatMatrix(matrix: Matrix, decimalPlaces: number): string {
 }
 
 export function calculateMatrix(
-  operation: MatrixOperation,
+  operation: Exclude<MatrixOperation, "solve">,
   inputA: string,
   inputB = "",
   decimalPlaces = 4,

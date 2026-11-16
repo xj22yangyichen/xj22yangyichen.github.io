@@ -44,6 +44,16 @@ export const diffTool = {
 } as const satisfies Tool;
 
 export const matrixTools = {
+  solve: {
+    categoryId: "math",
+    slug: "linear-equations",
+    title: { "zh-CN": "线性方程组求解", en: "Linear equation solver" },
+    description: {
+      "zh-CN": "求解 Ax = b，判断唯一解、无解或无穷多解，并给出通解。",
+      en: "Solve Ax = b, identify unique, inconsistent or infinite solutions, and find the general solution.",
+    },
+    category: { "zh-CN": "数学工具", en: "Math tools" },
+  },
   multiply: {
     categoryId: "math",
     slug: "matrix-multiply",
