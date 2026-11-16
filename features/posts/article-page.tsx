@@ -46,6 +46,7 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
   return (
     <main className="article-page">
       <header className="shell article-header">
+        <h1>{article.title}</h1>
         <SiteLink className="article-back-link" href={postsHref}>
           <ArrowLeft aria-hidden="true" />
           {content.back}
@@ -68,7 +69,6 @@ export function ArticlePage({ article, navigation }: ArticlePageProps) {
           </span>
           <ArticleViewStats locale={article.locale} slug={article.slug} />
         </div>
-        <h1>{article.title}</h1>
         <div className="article-header-tags">
           {article.tags.map((tag) => (
             <Chip key={tag} size="sm" variant="soft">

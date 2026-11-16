@@ -1,6 +1,6 @@
 .posts-page {
   min-height: calc(100vh - 76px);
-  padding-block: 86px 120px;
+  padding-block: var(--page-top-space) 120px;
 }
 
 .posts-page .page-intro {
@@ -286,7 +286,7 @@
 
 .article-header {
   max-width: none;
-  padding-block: 72px 50px;
+  padding-block: var(--page-top-space) 50px;
 }
 
 .article-back-link {
@@ -311,7 +311,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px 22px;
-  margin-top: 54px;
+  margin-top: 24px;
   color: var(--faint);
   font-size: 11px;
   font-weight: 700;
@@ -323,18 +323,18 @@
 
 .article-header h1 {
   max-width: none;
-  margin: 18px 0 24px;
+  margin: 0 0 24px;
   font-family: var(--serif);
-  font-size: 58px;
+  font-size: var(--page-title-size);
   font-weight: 900;
-  line-height: 1.24;
+  line-height: 1.2;
 }
 
 .article-header-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 0;
+  margin-top: 24px;
 }
 
 .article-header-tags [data-slot="chip"] {
@@ -817,7 +817,7 @@ html[data-theme="dark"] .article-prose pre {
 @media (max-width: 760px) {
   .posts-page {
     min-height: calc(100vh - 64px);
-    padding-block: 64px 80px;
+    padding-block: var(--page-top-space) 80px;
   }
 
   .posts-page .page-intro {
@@ -878,16 +878,11 @@ html[data-theme="dark"] .article-prose pre {
   }
 
   .article-header {
-    padding-block: 40px 34px;
+    padding-block: var(--page-top-space) 34px;
   }
 
   .article-header-meta {
-    margin-top: 38px;
-  }
-
-  .article-header h1 {
-    font-size: 36px;
-    line-height: 1.32;
+    margin-top: 24px;
   }
 
   .article-cover {

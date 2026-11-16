@@ -30,6 +30,8 @@
   --yellow: #e8b94f;
   --shadow: 0 20px 60px rgba(31, 43, 40, 0.12);
   --shell: min(1180px, calc(100% - 48px));
+  --page-top-space: 86px;
+  --page-title-size: 66px;
   --sans: "Noto Sans SC Variable", "Microsoft YaHei", system-ui, sans-serif;
   --serif: "Noto Serif SC Variable", "Songti SC", STSong, serif;
 }
@@ -760,7 +762,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
 .static-page {
   min-height: calc(100vh - 76px);
-  padding-block: 86px 120px;
+  padding-block: var(--page-top-space) 120px;
 }
 
 .page-intro {
@@ -768,7 +770,7 @@ html[data-theme="dark"] .theme-icon-sun {
 }
 
 .page-intro h1 {
-  font-size: 66px;
+  font-size: var(--page-title-size);
   line-height: 1.2;
 }
 
@@ -847,6 +849,8 @@ html[data-theme="dark"] .theme-icon-sun {
 @media (max-width: 760px) {
   :root {
     --shell: min(calc(100% - 32px), 680px);
+    --page-top-space: 64px;
+    --page-title-size: 40px;
   }
 
   .site-content {
@@ -987,11 +991,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
   .static-page {
     min-height: calc(100vh - 64px);
-    padding-block: 64px 80px;
-  }
-
-  .page-intro h1 {
-    font-size: 40px;
+    padding-block: var(--page-top-space) 80px;
   }
 
   .page-intro p {

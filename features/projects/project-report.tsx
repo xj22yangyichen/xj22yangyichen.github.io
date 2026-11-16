@@ -35,6 +35,7 @@ export async function ProjectReport({
   return (
     <main className="article-page project-report">
       <header className="shell article-header">
+        <h1>{english ? project.name : project.nameZh}</h1>
         <SiteLink
           className="article-back-link"
           href={getLocalizedPath("/projects/", locale)}
@@ -46,7 +47,6 @@ export async function ProjectReport({
           <span>{content.course}</span>
           <span>{content.tags.join(" / ")}</span>
         </div>
-        <h1>{english ? project.name : project.nameZh}</h1>
         <p className="project-subtitle" lang={locale}>
           {content.subtitle}
         </p>

@@ -1,6 +1,6 @@
 .books-page {
   min-height: calc(100vh - 76px);
-  padding-block: 86px 120px;
+  padding-block: var(--page-top-space) 120px;
 }
 
 .books-page .page-intro {
@@ -616,7 +616,7 @@
 @media (max-width: 760px) {
   .books-page {
     min-height: calc(100vh - 64px);
-    padding-block: 64px 80px;
+    padding-block: var(--page-top-space) 80px;
   }
 
   .books-page .page-intro {

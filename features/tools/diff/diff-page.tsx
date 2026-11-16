@@ -13,6 +13,10 @@ import "./diff.css";
 export function DiffPage({ locale }: { readonly locale: SiteLocale }) {
   return (
     <main className="shell tools-page">
+      <PageIntro
+        title={diffTool.title[locale]}
+        description={diffTool.description[locale]}
+      />
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}
@@ -20,10 +24,6 @@ export function DiffPage({ locale }: { readonly locale: SiteLocale }) {
         <ArrowLeft aria-hidden="true" />
         {locale === "en" ? "All tools" : "全部工具"}
       </SiteLink>
-      <PageIntro
-        title={diffTool.title[locale]}
-        description={diffTool.description[locale]}
-      />
       <DiffWorkbench locale={locale} />
     </main>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { SiteDocument } from "@/components/layout/site-document";
 import { NotFoundPage } from "@/features/not-found/not-found-page";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -21,10 +22,8 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFoundPage() {
   return (
-    <html lang="zh-CN">
-      <body>
-        <NotFoundPage locale="zh-CN" />
-      </body>
-    </html>
+    <SiteDocument locale="zh-CN">
+      <NotFoundPage locale="zh-CN" />
+    </SiteDocument>
   );
 }

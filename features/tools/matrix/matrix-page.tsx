@@ -17,6 +17,10 @@ export function MatrixPage({
   const tool = matrixTools[operation];
   return (
     <main className="shell tools-page">
+      <PageIntro
+        title={tool.title[locale]}
+        description={tool.description[locale]}
+      />
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}
@@ -24,10 +28,6 @@ export function MatrixPage({
         <ArrowLeft aria-hidden="true" />
         {locale === "en" ? "All tools" : "全部工具"}
       </SiteLink>
-      <PageIntro
-        title={tool.title[locale]}
-        description={tool.description[locale]}
-      />
       <MatrixWorkbench locale={locale} operation={operation} />
     </main>
   );

@@ -1,5 +1,5 @@
 .tools-page {
-  padding-block: 64px 100px;
+  padding-block: var(--page-top-space) 100px;
 }
 .tools-page .page-intro {
   margin-bottom: 36px;
@@ -289,7 +289,7 @@
 }
 @media (max-width: 760px) {
   .tools-page {
-    padding-block: 36px 64px;
+    padding-block: var(--page-top-space) 64px;
   }
   .tools-grid,
   .tool-editors {

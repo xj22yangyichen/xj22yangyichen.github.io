@@ -12,6 +12,10 @@ import "../tools.css";
 export function AsciiPage({ locale }: { readonly locale: SiteLocale }) {
   return (
     <main className="shell tools-page">
+      <PageIntro
+        title={asciiTool.title[locale]}
+        description={asciiTool.description[locale]}
+      />
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}
@@ -19,10 +23,6 @@ export function AsciiPage({ locale }: { readonly locale: SiteLocale }) {
         <ArrowLeft aria-hidden="true" />
         {locale === "en" ? "All tools" : "全部工具"}
       </SiteLink>
-      <PageIntro
-        title={asciiTool.title[locale]}
-        description={asciiTool.description[locale]}
-      />
       <AsciiWorkbench locale={locale} />
     </main>
   );

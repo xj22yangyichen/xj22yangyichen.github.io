@@ -12,6 +12,10 @@ import "../tools.css";
 export function Base64Page({ locale }: { readonly locale: SiteLocale }) {
   return (
     <main className="shell tools-page">
+      <PageIntro
+        title={base64Tool.title[locale]}
+        description={base64Tool.description[locale]}
+      />
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}
@@ -19,10 +23,6 @@ export function Base64Page({ locale }: { readonly locale: SiteLocale }) {
         <ArrowLeft aria-hidden="true" />
         {locale === "en" ? "All tools" : "全部工具"}
       </SiteLink>
-      <PageIntro
-        title={base64Tool.title[locale]}
-        description={base64Tool.description[locale]}
-      />
       <Base64Workbench locale={locale} />
     </main>
   );

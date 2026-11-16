@@ -16,6 +16,10 @@ export function CommentRemoverPage({
 }) {
   return (
     <main className="shell tools-page comment-remover-page">
+      <PageIntro
+        title={commentRemoverTool.title[locale]}
+        description={commentRemoverTool.description[locale]}
+      />
       <SiteLink
         className="tools-back"
         href={getLocalizedPath("/tools/", locale)}
@@ -23,10 +27,6 @@ export function CommentRemoverPage({
         <ArrowLeft aria-hidden="true" />
         {locale === "en" ? "All tools" : "全部工具"}
       </SiteLink>
-      <PageIntro
-        title={commentRemoverTool.title[locale]}
-        description={commentRemoverTool.description[locale]}
-      />
       <CommentRemoverWorkbench locale={locale} />
     </main>
   );
