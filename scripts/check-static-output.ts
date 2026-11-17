@@ -50,6 +50,8 @@ const requiredFiles = [
   "en/tools/comment-remover/index.html",
   "tools/diff/index.html",
   "en/tools/diff/index.html",
+  "tools/regex/index.html",
+  "en/tools/regex/index.html",
   "tools/matrix-multiply/index.html",
   "en/tools/matrix-multiply/index.html",
   "tools/matrix-eigenvalues/index.html",

@@ -43,6 +43,17 @@ export const diffTool = {
   category: { "zh-CN": "文本工具", en: "Text tools" },
 } as const satisfies Tool;
 
+export const regexTool = {
+  categoryId: "text",
+  slug: "regex",
+  title: { "zh-CN": "正则表达式匹配", en: "Regular expression tester" },
+  description: {
+    "zh-CN": "检查字符串是否匹配 JavaScript 正则表达式。",
+    en: "Check whether a string matches a JavaScript regular expression.",
+  },
+  category: { "zh-CN": "文本工具", en: "Text tools" },
+} as const satisfies Tool;
+
 export const matrixTools = {
   solve: {
     categoryId: "math",
@@ -142,6 +153,7 @@ export const tools: readonly Tool[] = [
   base64Tool,
   asciiTool,
   diffTool,
+  regexTool,
   ...Object.values(matrixTools),
   ...Object.values(integerTools),
 ];
