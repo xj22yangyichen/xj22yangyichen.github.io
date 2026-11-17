@@ -1,6 +1,46 @@
 .tools-page {
   padding-block: var(--page-top-space) 100px;
 }
+.file-type-drop {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+  border: 1px dashed var(--accent);
+  border-radius: 12px;
+  background: var(--surface);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.file-type-drop h2,
+.file-type-drop p {
+  margin: 0;
+}
+.file-type-drop p {
+  color: var(--muted);
+}
+.file-type-result {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+}
+.file-type-result div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 10px 0;
+}
+.file-type-result dt {
+  width: 120px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.file-type-result dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  flex: 1 1 180px;
+}
 .tools-page .page-intro {
   margin-bottom: 36px;
 }

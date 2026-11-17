@@ -38,6 +38,7 @@
     "diff": "9.0.0",
     "dotenv": "17.2.1",
     "fast-xml-parser": "5.10.0",
+    "file-type": "^22.3.0",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3",
     "katex": "0.16.47",

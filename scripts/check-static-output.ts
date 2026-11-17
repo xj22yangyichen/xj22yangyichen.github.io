@@ -45,6 +45,8 @@ const requiredFiles = [
   "en/tools/index.html",
   "en/tools/base64/index.html",
   "tools/ascii/index.html",
+  "tools/file-type/index.html",
+  "en/tools/file-type/index.html",
   "en/tools/ascii/index.html",
   "tools/comment-remover/index.html",
   "en/tools/comment-remover/index.html",

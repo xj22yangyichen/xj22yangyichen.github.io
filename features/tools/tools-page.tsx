@@ -1,4 +1,10 @@
-import { Calculator, Clock, Type, type LucideIcon } from "lucide-react";
+import {
+  Calculator,
+  Clock,
+  FileSearch,
+  Type,
+  type LucideIcon,
+} from "lucide-react";
 
 import { PageIntro } from "@/components/page/page-intro";
 import { SiteLink } from "@/components/ui/site-link";
@@ -12,6 +18,7 @@ const categoryIcons = {
   text: Type,
   math: Calculator,
   time: Clock,
+  file: FileSearch,
 } satisfies Record<ToolCategory, LucideIcon>;
 
 export function ToolsPage({ locale }: { readonly locale: SiteLocale }) {

@@ -1,6 +1,6 @@
 import type { LocalizedText } from "@/site.config";
 
-export type ToolCategory = "text" | "math" | "time";
+export type ToolCategory = "text" | "math" | "time" | "file";
 
 interface Tool {
   readonly slug: string;
@@ -158,7 +158,19 @@ export const radixTool = {
   category: { "zh-CN": "数学工具", en: "Math tools" },
 } as const satisfies Tool;
 
+export const fileTypeTool = {
+  categoryId: "file",
+  slug: "file-type",
+  title: { "zh-CN": "文件类型识别", en: "File type detector" },
+  description: {
+    "zh-CN": "根据文件内容识别类型，即使后缀错误或没有后缀也能判断。",
+    en: "Identify files by their contents, even with a wrong or missing extension.",
+  },
+  category: { "zh-CN": "文件工具", en: "File tools" },
+} as const satisfies Tool;
+
 export const tools: readonly Tool[] = [
+  fileTypeTool,
   commentRemoverTool,
   base64Tool,
   asciiTool,
