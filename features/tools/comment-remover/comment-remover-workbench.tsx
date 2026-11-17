@@ -49,7 +49,7 @@ const copy = {
     copied: "已复制",
     placeholder: "在这里输入或粘贴代码…",
     result: "删除注释后的代码将显示在这里",
-    hint: "代码仅在浏览器中处理。保留换行、字符串和 Python 文档字符串；块注释替换为空格，避免代码粘连。",
+    hint: "保留换行、字符串和 Python 文档字符串；块注释替换为空格，避免代码粘连。",
     done: "注释删除完成。",
     invalidCode: "无法识别代码，请检查未闭合的字符串、正则表达式或注释。",
     failed: "复制失败，请选中结果后手动复制。",
@@ -73,7 +73,7 @@ const copy = {
     copied: "Copied",
     placeholder: "Type or paste your code here…",
     result: "Code without comments will appear here",
-    hint: "Processed in your browser. Line breaks, strings and Python docstrings are preserved; block comments become spaces to keep tokens apart.",
+    hint: "Line breaks, strings and Python docstrings are preserved; block comments become spaces to keep tokens apart.",
     done: "Comments removed.",
     invalidCode:
       "Could not read the code. Check for unclosed strings, regular expressions or comments.",

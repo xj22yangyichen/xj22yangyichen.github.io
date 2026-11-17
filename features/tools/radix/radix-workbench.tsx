@@ -21,7 +21,7 @@ const copy = {
     failed: "复制失败，请手动复制结果。",
     done: "转换完成。",
     truncated: "结果已截断至小数点后 32 位，属于近似值。",
-    hint: "支持 2–36 进制；字母 A–Z 表示 10–35，不区分大小写。请直接输入数字，不加 0x、0b 等前缀，不使用科学计数法。整数精确转换，小数最多保留 32 位（截断）。输入最多 4096 个字符，内容仅在浏览器内处理。",
+    hint: "支持 2–36 进制；字母 A–Z 表示 10–35，不区分大小写。请直接输入数字，不加 0x、0b 等前缀，不使用科学计数法。整数精确转换，小数最多保留 32 位（截断）。输入最多 4096 个字符。",
     invalid:
       "数字与输入进制不匹配。请检查每一位数字，可使用正负号和一个小数点。",
     length: "输入最多支持 4096 个字符。",
@@ -46,7 +46,7 @@ const copy = {
     done: "Conversion complete.",
     truncated:
       "Result truncated to 32 fractional digits; this is an approximation.",
-    hint: "Supports bases 2–36. Letters A–Z represent 10–35 and are case-insensitive. Enter digits without prefixes such as 0x or 0b, or scientific notation. Integers are exact; fractions are truncated after 32 digits. Maximum 4096 input characters. Everything is processed in your browser.",
+    hint: "Supports bases 2–36. Letters A–Z represent 10–35 and are case-insensitive. Enter digits without prefixes such as 0x or 0b, or scientific notation. Integers are exact; fractions are truncated after 32 digits. Maximum 4096 input characters.",
     invalid:
       "The number does not match the input base. Check each digit; a sign and one decimal point are allowed.",
     length: "Input is limited to 4096 characters.",

@@ -159,15 +159,15 @@ export const radixTool = {
 } as const satisfies Tool;
 
 export const tools: readonly Tool[] = [
-  radixTool,
   commentRemoverTool,
-  timestampTool,
   base64Tool,
   asciiTool,
   diffTool,
   regexTool,
+  radixTool,
   ...Object.values(matrixTools),
   ...Object.values(integerTools),
+  timestampTool,
 ];
 
 export const toolboxCopy = {
