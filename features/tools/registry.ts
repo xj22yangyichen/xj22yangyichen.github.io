@@ -147,7 +147,19 @@ export const commentRemoverTool = {
   category: { "zh-CN": "文本工具", en: "Text tools" },
 } as const satisfies Tool;
 
+export const radixTool = {
+  categoryId: "math",
+  slug: "radix",
+  title: { "zh-CN": "进制转换", en: "Number base converter" },
+  description: {
+    "zh-CN": "在 2–36 进制之间转换数字，支持大整数、负数与小数。",
+    en: "Convert numbers between bases 2–36, including large integers, negatives and fractions.",
+  },
+  category: { "zh-CN": "数学工具", en: "Math tools" },
+} as const satisfies Tool;
+
 export const tools: readonly Tool[] = [
+  radixTool,
   commentRemoverTool,
   timestampTool,
   base64Tool,
